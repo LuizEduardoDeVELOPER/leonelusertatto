@@ -116,3 +116,38 @@
         0 20px 40px rgba(0,0,0,.35);
 
 }
+@media(max-width: 768px){
+
+    .portfolio{
+        padding-top: 90px;
+    }
+
+    .produtos__grid{
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+        padding: 0 14px;
+    }
+
+    .prod-card__img-container{
+        height: 230px;
+    }
+
+    .prod-card__info{
+        padding: 16px;
+    }
+
+    .prod-card__info h3{
+        font-size: 21px;
+        line-height: 1.1;
+    }
+
+    .prod-card__info p{
+        font-size: 13px;
+        line-height: 1.4;
+    }
+
+    .btn-solicitar{
+        font-size: 10px;
+        padding: 12px 8px;
+    }
+}
