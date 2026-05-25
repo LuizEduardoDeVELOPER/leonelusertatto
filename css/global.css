@@ -1,33 +1,28 @@
 /* ========================================
-   RESET & VARIÁVEIS
+   RESET & VARIÁVEIS GLOBAIS
 ======================================== */
 
 :root {
-    --bg-color: #0a0a0a;
-    --card-bg: #111111;
-    --card-accent: #161616;
-    --border-color: #222222;
-    --text-primary: #ffffff;
-    --text-secondary: #a0a0a0;
-    --text-muted: #888888;
-    --accent-color: #e5c475;
+    --bg-color:        #0a0a0a;
+    --card-bg:         #111111;
+    --border-color:    #222222;
+    --text-primary:    #ffffff;
+    --text-secondary:  #a0a0a0;
+    --text-muted:      #888888;
+    --accent-color:    #e5c475;
 }
 
-/* ========================================
-   RESET
-======================================== */
-
-*{
+*, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html{
+html {
     scroll-behavior: smooth;
 }
 
-body{
+body {
     background-color: var(--bg-color);
     color: var(--text-primary);
     font-family: 'Montserrat', sans-serif;
@@ -35,400 +30,60 @@ body{
 }
 
 /* ========================================
-   MAIN
-======================================== */
-
-main{
-    position: relative;
-    z-index: 1;
-}
-
-/* ========================================
    SECTIONS
 ======================================== */
 
-section{
+section {
     position: relative;
     padding: 80px 0;
-}
-
-.hero{
-    padding: 0;
-}
-
-/* OUTRAS SECTIONS */
-
-.portfolio,
-.sobre,
-.pinturas,
-.loja,
-.reserva{
-    background-color: #0a0a0a;
+    overflow: hidden;
 }
 
 /* ========================================
-   TÍTULOS GLOBAIS
+   SECTION HEADERS
 ======================================== */
 
-.section-header{
+.section-header {
     text-align: center;
     margin-bottom: 60px;
+    padding: 0 20px;
 }
 
-.section-label{
+.section-label {
+    display: block;
+    margin-bottom: 10px;
     font-size: 11px;
     letter-spacing: 3px;
     color: var(--accent-color);
     text-transform: uppercase;
-    display: block;
-    margin-bottom: 10px;
 }
 
-.section-title{
+.section-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 42px;
+    font-size: clamp(32px, 5vw, 42px);
     font-weight: 300;
     color: #fff;
 }
 
 /* ========================================
-   REVEAL
+   REVEAL ANIMATION
 ======================================== */
 
-.reveal{
+.reveal {
     opacity: 0;
     transform: translateY(40px);
-    transition: all .8s ease;
+    transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-.reveal.active{
+.reveal.active {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* ========================================
-   MODAL
-======================================== */
-
-.modal-orcamento{
-    position: fixed;
-    inset: 0;
-
-    background: rgba(0,0,0,.75);
-
-    backdrop-filter: blur(8px);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition: .4s ease;
-
-    z-index: 99999;
-}
-
-.modal-orcamento.open{
+/* Garante visibilidade se JS falhar */
+.no-js .reveal {
     opacity: 1;
-    visibility: visible;
-}
-
-.modal-orcamento__content{
-    width: 90%;
-    max-width: 650px;
-
-    background: #111;
-
-    border: 1px solid rgba(255,255,255,.08);
-
-    border-radius: 24px;
-
-    padding: 40px;
-
-    position: relative;
-
-    transform: translateY(40px);
-
-    transition: .4s ease;
-}
-
-.modal-orcamento.open .modal-orcamento__content{
-    transform: translateY(0);
-}
-
-.modal-orcamento__close{
-    position: absolute;
-
-    top: 20px;
-    right: 20px;
-
-    background: none;
-    border: none;
-
-    color: white;
-
-    font-size: 2rem;
-
-    cursor: pointer;
-}
-
-/* ========================================
-   FOOTER
-======================================== */
-
-.footer{
-    background-color: #050505;
-    border-top: 1px solid var(--border-color);
-    padding: 60px 0;
-    text-align: center;
-}
-
-.footer__brand h2{
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 32px;
-    letter-spacing: 4px;
-    color: #fff;
-}
-
-.footer__brand p{
-    color: var(--accent-color);
-    font-size: 12px;
-    margin-top: 5px;
-}
-
-.footer__copy{
-    margin-top: 30px;
-    font-size: 12px;
-    color: var(--text-muted);
-}
-
-.saiba-mais,
-/* ========================================
-   LOCALIZAÇÃO PREMIUM
-======================================== */
-
-.localizacao__container{
-    width: min(1100px, 90%);
-    margin: 0 auto;
-
-    display: grid;
-    grid-template-columns: .9fr 1.3fr;
-    gap: 28px;
-    align-items: stretch;
-}
-
-.localizacao__info,
-.localizacao__mapa{
-    position: relative;
-    background: linear-gradient(145deg, #111, #080808);
-    border: 1px solid rgba(229,196,117,.22);
-    padding: 34px;
-    overflow: hidden;
-}
-
-.localizacao__info::before,
-.localizacao__mapa::before{
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(229,196,117,.16), transparent 35%);
-    opacity: 0;
-    transition: opacity .3s ease;
-    pointer-events: none;
-}
-
-.localizacao__info:hover::before,
-.localizacao__mapa:hover::before{
-    opacity: 1;
-}
-
-.localizacao__info h3{
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 34px;
-    font-weight: 300;
-    color: #e5c475;
-    margin-bottom: 22px;
-}
-
-.localizacao__info p{
-    color: rgba(255,255,255,.78);
-    font-size: 15px;
-    line-height: 1.7;
-    margin-bottom: 10px;
-}
-
-.localizacao__info strong{
-    color: #fff;
-    font-weight: 700;
-}
-
-.localizacao__info a{
-    color: #e5c475;
-    text-decoration: none;
-}
-
-.localizacao__mapa{
-    padding: 12px;
-}
-
-.localizacao__mapa iframe{
-    width: 100%;
-    height: 360px;
-    display: block;
-    filter: grayscale(1) contrast(1.05) brightness(.85);
-    transition: .4s ease;
-}
-
-.localizacao__mapa:hover iframe{
-    filter: grayscale(.2) contrast(1.05) brightness(.95);
-}
-
-@media(max-width: 768px){
-    .localizacao__container{
-        grid-template-columns: 1fr;
-    }
-}
-
-.footer{
-    background: #050505;
-    border-top: 1px solid rgba(229,196,117,.18);
-    padding: 60px 8%;
-    text-align: center;
-}
-
-.footer__links{
-    display: flex;
-    justify-content: center;
-    gap: 24px;
-    margin: 25px 0;
-    flex-wrap: wrap;
-}
-
-.footer__links a{
-    color: #e5c475;
-    text-decoration: none;
-    font-size: 12px;
-    text-transform: uppercase;
-}
-
-.footer__lgpd{
-    max-width: 800px;
-    margin: 0 auto 25px;
-    color: #aaa;
-    font-size: 13px;
-    line-height: 1.7;
-}
-
-
-
-
-.info-card,
-.localizacao__info,
-.localizacao__mapa{
-    background: #111;
-    border: 1px solid rgba(229,196,117,.18);
-    padding: 24px;
-}
-
-.localizacao__container{
-    display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: 24px;
-    align-items: stretch;
-}
-
-.localizacao__mapa iframe{
-    width: 100%;
-    height: 320px;
-    display: block;
-}
-
-.footer{
-    padding: 50px 8%;
-}
-
-
-
-
-/* ========================================
-   LOUSA GEOMÉTRICA
-======================================== */
-
-.lousa-geometrica{
-    background: #070707;
-    padding: 90px 0;
-}
-
-.lousa-geometrica__container{
-    width: min(1100px, 90%);
-    margin: 0 auto;
-
-    display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    gap: 40px;
-
-    align-items: center;
-}
-
-.lousa-geometrica__texto{
-    background: #111;
-    border: 1px solid rgba(229,196,117,.18);
-    padding: 32px;
-}
-
-.lousa-geometrica__texto h3{
-    font-size: 28px;
-    margin-bottom: 18px;
-}
-
-.lousa-geometrica__texto p{
-    color: #aaa;
-    line-height: 1.8;
-    margin-bottom: 28px;
-}
-
-.btn-limpar-lousa{
-    background: #e5c475;
-    color: #000;
-    border: none;
-    padding: 14px 28px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-#lousaCanvas{
-    width: 100%;
-    height: 420px;
-    display: block;
-    position: relative;
-    z-index: 999;
-    cursor: crosshair;
-    pointer-events: auto;
-
-    background: rgba(10,10,10,.82);
-    border: 1px solid rgba(229,196,117,.35);
-}
-@media(max-width: 768px){
-    .lousa-geometrica__container{
-        grid-template-columns: 1fr;
-    }
-
-    #lousaCanvas{
-        height: 320px;
-    }
-}
-
-/* animação sutil */
-@keyframes geometriaMove{
-    from{
-        background-position: 0 0;
-    }
-
-    to{
-        background-position: 520px 520px;
-    }
+    transform: none;
 }
 
 /* ========================================
@@ -442,9 +97,7 @@ section{
 .lousa-geometrica,
 .reserva,
 .saiba-mais,
-.localizacao{
-    position: relative;
-    overflow: hidden;
+.localizacao {
     background: #050505 !important;
 }
 
@@ -455,35 +108,17 @@ section{
 .lousa-geometrica::before,
 .reserva::before,
 .saiba-mais::before,
-.localizacao::before{
-
+.localizacao::before {
     content: "";
-
     position: absolute;
     inset: 0;
-
     background-image: url('../images/geometria-bg.png');
-
     background-size: 520px;
-
     background-repeat: repeat;
-
-    background-position: center;
-
-    opacity: .95;
-
-    filter:
-        hue-rotate(var(--geo-color, 0deg))
-        saturate(2.2)
-        brightness(1.35)
-        contrast(1.25);
-
-    animation:
-        geoMove 24s linear infinite,
-        geoPulse 4s ease-in-out infinite;
-
+    opacity: 0.95;
+    filter: hue-rotate(var(--geo-color, 0deg)) saturate(2.2) brightness(1.35) contrast(1.25);
+    animation: geoMove 24s linear infinite, geoPulse 4s ease-in-out infinite;
     z-index: 0;
-
     pointer-events: none;
 }
 
@@ -494,23 +129,17 @@ section{
 .lousa-geometrica::after,
 .reserva::after,
 .saiba-mais::after,
-.localizacao::after{
-
+.localizacao::after {
     content: "";
-
     position: absolute;
     inset: 0;
-
-    background:
-        radial-gradient(
-            circle at var(--x, 50%) var(--y, 50%),
-            rgba(229,196,117,.22),
-            rgba(0,0,0,.20) 30%,
-            rgba(0,0,0,.55) 100%
-        );
-
+    background: radial-gradient(
+        circle at var(--x, 50%) var(--y, 50%),
+        rgba(229,196,117,.22),
+        rgba(0,0,0,.20) 30%,
+        rgba(0,0,0,.55) 100%
+    );
     z-index: 1;
-
     pointer-events: none;
 }
 
@@ -521,201 +150,501 @@ section{
 .lousa-geometrica > *,
 .reserva > *,
 .saiba-mais > *,
-.localizacao > *{
-
+.localizacao > * {
     position: relative;
     z-index: 2;
 }
 
-@keyframes geoMove{
-
-    from{
-        background-position: 0 0;
-    }
-
-    to{
-        background-position: 520px 520px;
-    }
+@keyframes geoMove {
+    from { background-position: 0 0; }
+    to   { background-position: 520px 520px; }
 }
 
-@keyframes geoPulse{
+@keyframes geoPulse {
+    0%, 100% { opacity: 0.82; }
+    50%       { opacity: 1; }
+}
 
-    0%, 100%{
-        opacity: .82;
+/* ========================================
+   MODAL ORÇAMENTO
+======================================== */
+
+.modal-orcamento {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.80);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: .4s ease;
+    z-index: 99999;
+    padding: 20px;
+}
+
+.modal-orcamento.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-orcamento__content {
+    width: 100%;
+    max-width: 620px;
+    background: #111;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 20px;
+    padding: 40px 36px;
+    position: relative;
+    transform: translateY(40px);
+    transition: .4s ease;
+}
+
+.modal-orcamento.open .modal-orcamento__content {
+    transform: translateY(0);
+}
+
+.modal-orcamento__content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.modal-orcamento__content p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 28px;
+}
+
+.modal-orcamento__close {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+    opacity: .6;
+    transition: opacity .2s;
+}
+
+.modal-orcamento__close:hover {
+    opacity: 1;
+}
+
+.modal-form .form-group {
+    margin-bottom: 16px;
+}
+
+.modal-form input,
+.modal-form select,
+.modal-form textarea {
+    width: 100%;
+    background: #1a1a1a;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 8px;
+    padding: 14px 16px;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color .2s;
+}
+
+.modal-form input:focus,
+.modal-form select:focus,
+.modal-form textarea:focus {
+    border-color: var(--accent-color);
+}
+
+.modal-form select option {
+    background: #1a1a1a;
+}
+
+.btn-enviar-orcamento {
+    width: 100%;
+    padding: 16px;
+    background: var(--accent-color);
+    color: #000;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: .3s ease;
+}
+
+.btn-enviar-orcamento:hover {
+    background: #f0d080;
+    transform: translateY(-2px);
+}
+
+/* ========================================
+   BOTÃO FLUTUANTE WHATSAPP
+======================================== */
+
+.btn-agendar-flutuante {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 28px;
+    background: var(--accent-color);
+    color: #000;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 8px 28px rgba(229,196,117,.4);
+    transition: .3s ease;
+}
+
+.btn-agendar-flutuante i {
+    font-size: 18px;
+}
+
+.btn-agendar-flutuante:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 36px rgba(229,196,117,.5);
+}
+
+/* ========================================
+   FOOTER
+======================================== */
+
+.footer {
+    background: #050505;
+    border-top: 1px solid rgba(229,196,117,.18);
+    padding: 60px 8%;
+    text-align: center;
+}
+
+.footer__brand h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    letter-spacing: 4px;
+    color: #fff;
+}
+
+.footer__brand p {
+    color: var(--accent-color);
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+.footer__links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+.footer__links a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: opacity .2s;
+}
+
+.footer__links a:hover {
+    opacity: .7;
+}
+
+.footer__lgpd {
+    max-width: 800px;
+    margin: 0 auto 25px;
+    color: #aaa;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.footer__copy {
+    margin-top: 30px;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* ========================================
+   RESPONSIVO GLOBAL
+======================================== */
+
+@media (max-width: 768px) {
+
+    section {
+        padding: 60px 0;
     }
 
-    50%{
-        opacity: 1;
+    .section-title {
+        font-size: 32px;
+    }
+
+    .btn-agendar-flutuante {
+        right: 16px;
+        bottom: 20px;
+        padding: 14px 22px;
+        font-size: 11px;
+    }
+
+    .modal-orcamento__content {
+        padding: 30px 22px;
+    }
+
+    body {
+        overflow-x: hidden;
     }
 }
 
 /* ========================================
-   FORÇA CORREÇÃO SAIBA MAIS
+   CORREÇÃO LOUSA MOBILE/DESKTOP
 ======================================== */
 
-section.saiba-mais{
-    width: 100% !important;
-    padding: 100px 0 !important;
+.lousa-geometrica__container{
+    width: min(1100px, 92%);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 36px;
+    align-items: stretch;
 }
 
-section.saiba-mais .saiba-mais__container{
-    width: min(1280px, 92vw) !important;
-    max-width: 1280px !important;
+.lousa-geometrica__texto{
+    position: relative;
+    z-index: 5;
+    background: rgba(17,17,17,.92);
+    border: 1px solid rgba(229,196,117,.25);
+    padding: 32px;
+}
+
+#lousaCanvas{
+    display: block !important;
+    width: 100% !important;
+    height: 420px !important;
+    min-height: 420px !important;
+
+    position: relative !important;
+    z-index: 5 !important;
+
+    background: rgba(5,5,5,.86) !important;
+    border: 1px solid rgba(229,196,117,.45) !important;
+
+    cursor: crosshair;
+    pointer-events: auto !important;
+}
+
+@media(max-width: 768px){
+
+    .lousa-geometrica{
+        padding: 80px 0;
+    }
+
+    .lousa-geometrica__container{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+        width: 92%;
+    }
+
+    .lousa-geometrica__texto{
+        padding: 24px;
+    }
+
+    #lousaCanvas{
+        width: 100% !important;
+        height: 340px !important;
+        min-height: 340px !important;
+    }
+}
+
+/* ========================================
+   SAIBA MAIS PREMIUM
+======================================== */
+
+.saiba-mais{
+    padding: 120px 0 !important;
+}
+
+.saiba-mais__container{
+    width: min(1180px, 92%) !important;
     margin: 0 auto !important;
 
     display: grid !important;
-    grid-template-columns: 380px 1fr !important;
-    gap: 60px !important;
+    grid-template-columns: .9fr 1.4fr !important;
+    gap: 50px !important;
     align-items: center !important;
 }
 
-section.saiba-mais .saiba-mais__grid{
-    width: 100% !important;
+.saiba-mais__intro{
+    background: rgba(8,8,8,.78);
+    border: 1px solid rgba(229,196,117,.22);
+    padding: 42px;
+    border-radius: 24px;
+    backdrop-filter: blur(10px);
+}
 
+.saiba-mais__intro h2{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 58px;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 24px;
+}
+
+.saiba-mais__intro p{
+    color: rgba(255,255,255,.72);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.saiba-mais__grid{
     display: grid !important;
-    grid-template-columns: repeat(3, minmax(220px, 1fr)) !important;
-    gap: 24px !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 22px !important;
 }
 
-section.saiba-mais .info-card{
-    width: auto !important;
-    min-width: 0 !important;
-    min-height: 260px !important;
+.info-card{
+    background: rgba(17,17,17,.9);
+    border: 1px solid rgba(229,196,117,.2);
+    border-radius: 22px;
+    padding: 32px 26px;
+    min-height: 280px;
 
-    padding: 32px 26px !important;
+    transition: .35s ease;
 }
 
-section.saiba-mais .info-card h3{
-    font-size: 24px !important;
-    line-height: 1.12 !important;
+.info-card:hover{
+    transform: translateY(-8px);
+    border-color: var(--accent-color);
+    box-shadow: 0 25px 70px rgba(0,0,0,.45);
 }
 
-section.saiba-mais .info-card p{
-    font-size: 15px !important;
-    line-height: 1.65 !important;
+.info-card span{
+    color: var(--accent-color);
+    letter-spacing: 4px;
+    font-size: 13px;
 }
 
-@media(max-width: 900px){
-    section.saiba-mais .saiba-mais__container{
-        grid-template-columns: 1fr !important;
-    }
+.info-card h3{
+    font-size: 25px;
+    line-height: 1.1;
+    margin: 24px 0 18px;
+}
 
-    section.saiba-mais .saiba-mais__grid{
-        grid-template-columns: 1fr !important;
-    }
+.info-card p{
+    color: rgba(255,255,255,.72);
+    line-height: 1.75;
+    font-size: 15px;
 }
 
 /* ========================================
-   AJUSTE FINAL SAIBA MAIS
+   LOCALIZAÇÃO PREMIUM
 ======================================== */
 
-section.saiba-mais{
-    width: 100% !important;
-    max-width: 100vw !important;
-    overflow: hidden !important;
-    padding: 90px 0 !important;
+.localizacao{
+    padding: 120px 0 !important;
 }
 
-section.saiba-mais .saiba-mais__container{
-    width: min(1120px, 90vw) !important;
-    max-width: 1120px !important;
+.localizacao__container{
+    width: min(1180px, 92%) !important;
     margin: 0 auto !important;
 
     display: grid !important;
-    grid-template-columns: 320px 1fr !important;
-    gap: 40px !important;
+    grid-template-columns: .85fr 1.15fr !important;
+    gap: 34px !important;
+    align-items: stretch !important;
 }
 
-section.saiba-mais .saiba-mais__grid{
-    width: 100% !important;
-    display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 18px !important;
+.localizacao__info{
+    background: rgba(8,8,8,.82) !important;
+    border: 1px solid rgba(229,196,117,.22) !important;
+    border-radius: 24px;
+    padding: 42px !important;
+    backdrop-filter: blur(10px);
 }
 
-section.saiba-mais .info-card{
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    padding: 28px 22px !important;
+.localizacao__info h3{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    margin-bottom: 26px;
 }
 
-section.saiba-mais .info-card h3{
-    font-size: 21px !important;
+.localizacao__info p{
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(255,255,255,.76);
 }
 
-section.saiba-mais .info-card p{
-    font-size: 14px !important;
+.localizacao__info strong{
+    color: #fff;
 }
 
-@media(max-width: 950px){
-    section.saiba-mais .saiba-mais__container{
-        grid-template-columns: 1fr !important;
-    }
-
-    section.saiba-mais .saiba-mais__grid{
-        grid-template-columns: 1fr !important;
-    }
+.localizacao__info a{
+    color: var(--accent-color);
+    font-weight: 700;
 }
+
+.localizacao__mapa{
+    background: rgba(8,8,8,.82) !important;
+    border: 1px solid rgba(229,196,117,.22) !important;
+    border-radius: 24px;
+    padding: 14px !important;
+    overflow: hidden;
+}
+
+.localizacao__mapa iframe{
+    width: 100%;
+    height: 420px !important;
+    border: 0;
+    border-radius: 18px;
+}
+
+/* MOBILE */
 
 @media(max-width: 768px){
 
-    .navbar{
-        position: fixed;
-        top: 0;
+    .saiba-mais__container,
+    .localizacao__container{
+        grid-template-columns: 1fr !important;
+        gap: 26px !important;
     }
 
-    .navbar__inner{
-        padding: 22px 18px;
-        flex-direction: column;
-        gap: 18px;
+    .saiba-mais__intro,
+    .localizacao__info{
+        padding: 28px !important;
     }
 
-    .navbar__logo{
-        font-size: 26px;
-        letter-spacing: 6px;
-        text-align: center;
+    .saiba-mais__intro h2,
+    .localizacao__info h3{
+        font-size: 38px;
     }
 
-    .navbar__menu{
-        width: 100%;
-        overflow-x: auto;
-        padding-bottom: 8px;
+    .saiba-mais__grid{
+        grid-template-columns: 1fr !important;
     }
 
-    .navbar__menu ul{
-        display: flex;
-        gap: 22px;
-        width: max-content;
-        padding: 0 10px;
+    .info-card{
+        min-height: auto;
     }
 
-    .navbar__menu a{
-        font-size: 11px;
-        white-space: nowrap;
-    }
-}
-@media(max-width: 768px){
-
-    .section-title{
-        font-size: 40px;
-        line-height: 1.1;
-    }
-
-    .section-header{
-        margin-bottom: 45px;
-        padding: 0 20px;
-    }
-
-    .btn-agendar-flutuante{
-        right: 18px;
-        bottom: 24px;
-        width: calc(100% - 36px);
-        justify-content: center;
-        z-index: 9999;
-    }
-
-    body{
-        overflow-x: hidden;
+    .localizacao__mapa iframe{
+        height: 320px !important;
     }
 }

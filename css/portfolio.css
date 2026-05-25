@@ -1,153 +1,122 @@
+/* ========================================
+   PORTFOLIO
+======================================== */
+
+.portfolio {
+    padding: 90px 0;
+}
+
 .produtos__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 32px;
-    padding: 0 48px;
-    max-width: 1400px;
+    width: min(1200px, 92%);
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
 }
 
 .prod-card {
-    background-color: var(--card-accent);
-    border: 1px solid var(--border-color);
+    background: #111;
+    border: 1px solid rgba(229,196,117,.14);
     border-radius: 4px;
     overflow: hidden;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.prod-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(0,0,0,.5);
 }
 
 .prod-card__img-container {
     position: relative;
-    height: 340px;
     overflow: hidden;
+    aspect-ratio: 4/3;
 }
 
 .prod-card__img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    display: block;
+    transition: transform .5s ease;
 }
 
 .prod-card:hover .prod-card__img {
-    transform: scale(1.04);
+    transform: scale(1.06);
 }
 
 .prod-card__badge {
     position: absolute;
-    top: 15px;
-    left: 15px;
-    background-color: var(--accent-color);
-    color: #000;
+    top: 14px;
+    left: 14px;
+    background: rgba(229,196,117,.15);
+    border: 1px solid rgba(229,196,117,.5);
+    color: var(--accent-color);
     font-size: 9px;
     font-weight: 700;
-    padding: 4px 8px;
-    letter-spacing: 1px;
-    z-index: 2;
+    letter-spacing: 2px;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    backdrop-filter: blur(4px);
+    z-index: 1;
 }
 
 .prod-card__info {
-    padding: 24px;
+    padding: 22px;
 }
 
 .prod-card__info h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
     color: #fff;
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 24px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .prod-card__info p {
-    color: var(--text-muted);
-    font-size: 14px;
-    margin-bottom: 20px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 18px;
 }
 
 .btn-solicitar {
-    width: 100%;
+    display: inline-block;
+    padding: 11px 22px;
     background: transparent;
-    border: 1px solid var(--accent-color);
+    border: 1px solid rgba(229,196,117,.45);
     color: var(--accent-color);
-    padding: 12px;
-    font-size: 11px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
     font-weight: 700;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    letter-spacing: 1px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: .25s ease;
+    border-radius: 2px;
 }
 
 .btn-solicitar:hover {
     background: var(--accent-color);
     color: #000;
-}
-
-.prod-card{
-    transition:
-        transform .4s ease,
-        box-shadow .4s ease;
-}
-
-.prod-card:hover{
-    transform:
-        translateY(-12px)
-        scale(1.02);
-
-    box-shadow:
-        0 20px 40px rgba(0,0,0,.35);
+    border-color: var(--accent-color);
 }
 
 /* ========================================
-   PREMIUM HOVER
+   MOBILE
 ======================================== */
 
-.prod-card{
+@media (max-width: 768px) {
 
-    transition:
-        transform .4s ease,
-        box-shadow .4s ease;
-
-}
-
-.prod-card:hover{
-
-    transform:
-        translateY(-10px);
-
-    box-shadow:
-        0 20px 40px rgba(0,0,0,.35);
-
-}
-@media(max-width: 768px){
-
-    .portfolio{
-        padding-top: 90px;
-    }
-
-    .produtos__grid{
-        grid-template-columns: repeat(2, 1fr);
+    .produtos__grid {
+        grid-template-columns: 1fr;
         gap: 18px;
-        padding: 0 14px;
     }
+}
 
-    .prod-card__img-container{
-        height: 230px;
-    }
+@media (min-width: 769px) and (max-width: 1024px) {
 
-    .prod-card__info{
-        padding: 16px;
-    }
-
-    .prod-card__info h3{
-        font-size: 21px;
-        line-height: 1.1;
-    }
-
-    .prod-card__info p{
-        font-size: 13px;
-        line-height: 1.4;
-    }
-
-    .btn-solicitar{
-        font-size: 10px;
-        padding: 12px 8px;
+    .produtos__grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }

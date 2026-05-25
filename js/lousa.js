@@ -13,16 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function resizeCanvas() {
         const rect = canvas.getBoundingClientRect()
-
         canvas.width = rect.width
         canvas.height = rect.height
-
         redesenhar()
     }
 
     function getPos(e) {
         const rect = canvas.getBoundingClientRect()
-
         return {
             x: e.clientX - rect.left,
             y: e.clientY - rect.top
@@ -54,7 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function redesenhar() {
         ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-        pontos.forEach((p1, i) => {
+        for (let i = 0; i < pontos.length; i++) {
+            const p1 = pontos[i]
+
             for (let j = i + 1; j < pontos.length; j++) {
                 const p2 = pontos[j]
                 const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y)
@@ -68,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.shadowColor = `hsl(${p1.hue}, 100%, 65%)`
                     ctx.strokeStyle = `hsla(${p1.hue}, 100%, 65%, ${1 - dist / 165})`
                     ctx.lineWidth = 1.6
+
                     ctx.stroke()
                 }
             }
@@ -78,8 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.shadowBlur = 18
             ctx.shadowColor = `hsl(${p1.hue}, 100%, 65%)`
             ctx.fillStyle = `hsl(${p1.hue}, 100%, 65%)`
+
             ctx.fill()
-        })
+        }
 
         ctx.shadowBlur = 0
     }
@@ -94,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
         adicionarPonto(e)
     })
 
-    window.addEventListener('mouseup', () => {
+    canvas.addEventListener('mouseup', () => {
         desenhando = false
     })
 
@@ -113,3 +114,5 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeCanvas()
     window.addEventListener('resize', resizeCanvas)
 })
+
+

@@ -1,273 +1,273 @@
-/* Seção Sobre e Processo Institucional */
+/* ========================================
+   SOBRE & CONCEITO
+======================================== */
+
+.sobre {
+    padding: 90px 0;
+}
+
 .sobre__container {
-    max-width: 1200px;
+    width: min(1100px, 90%);
     margin: 0 auto;
-    padding: 0 48px;
     display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 60px;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
     align-items: start;
 }
 
-.sobre__manifesto h3 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 32px;
-    font-weight: 300;
-    line-height: 1.3;
-    color: var(--accent-color);
-    margin-bottom: 24px;
+/* Manifesto */
+.sobre__manifesto {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(229,196,117,.18);
+    padding: 36px;
+    min-height: 180px;
 }
 
-.sobre__manifesto p {
-    color: var(--text-secondary);
-    font-size: 15px;
-    line-height: 1.7;
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: var(--accent-color);
     margin-bottom: 16px;
 }
 
+.tab-content p {
+    color: rgba(255,255,255,.78);
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* Cards de processo */
 .sobre__processo-grid {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 12px;
 }
 
 .processo-card {
     display: flex;
-    gap: 24px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid var(--border-color);
+    align-items: center;
+    gap: 20px;
+    padding: 20px 24px;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: .3s ease;
 }
 
-.processo-card:last-child {
-    border-bottom: none;
+.processo-card:hover,
+.processo-card.active {
+    background: rgba(229,196,117,.07);
+    border-color: rgba(229,196,117,.4);
 }
 
 .processo-card__number {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 36px;
     font-weight: 300;
-    color: rgba(229, 196, 117, 0.3);
-    line-height: 1;
+    color: rgba(229,196,117,.3);
+    flex-shrink: 0;
+    transition: color .3s;
+}
+
+.processo-card.active .processo-card__number {
+    color: var(--accent-color);
 }
 
 .processo-card__text h4 {
-    font-size: 18px;
-    color: var(--text-primary);
-    font-weight: 600;
-    margin-bottom: 8px;
-    letter-spacing: 0.5px;
-}
-
-.processo-card__text p {
-    color: var(--text-muted);
     font-size: 14px;
-    line-height: 1.6;
-}
-
-@media (max-width: 992px) {
-    .sobre__container {
-        grid-template-columns: 1fr;
-        gap: 40px;
-        padding: 0 24px;
-    }
-}
-
-/* Gerenciamento de Exibição das Abas (Tabs) */
-.tab-content {
-    display: none;
-    opacity: 0;
-    transform: translateX(-20px);
-    transition: all 0.5s ease;
-}
-
-.tab-content.active {
-    display: block;
-    opacity: 1;
-    transform: translateX(0);
-}
-
-/* Modificações no Card Ativo da Direita */
-.processo-card {
-    cursor: pointer;
-    border-left: 2px solid transparent;
-    padding-left: 15px;
-    transition: all 0.3s ease;
-}
-
-.processo-card:hover {
-    background-color: rgba(255, 255, 255, 0.02);
-}
-
-.processo-card.active {
-    border-left-color: var(--accent-color);
-    background-color: rgba(229, 196, 117, 0.04);
-}
-
-.processo-card.active .processo-card__number {
-    color: var(--accent-color) !important;
-}
-
-/* --- NOVO RODAPÉ PREMIUM ESCURO --- */
-.footer {
-    background-color: #050505;
-    border-top: 1px solid var(--border-color);
-    padding: 60px 0 30px 0;
-    margin-top: 80px;
-}
-
-.footer__inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 48px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-}
-
-.footer__brand {
-    text-align: center;
-}
-
-.footer__brand h2 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 28px;
-    letter-spacing: 4px;
-    color: var(--text-primary);
-}
-
-.footer__brand p {
-    font-size: 12px;
-    color: var(--accent-color);
-    letter-spacing: 1px;
-    margin-top: 4px;
-}
-
-.footer__nav {
-    display: flex;
-    gap: 32px;
-}
-
-.footer__nav a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    transition: color 0.3s ease;
-}
-
-.footer__nav a:hover {
-    color: var(--accent-color);
-}
-
-.footer__copy {
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    width: 100%;
-    text-align: center;
-    padding-top: 24px;
-    font-size: 11px;
-    color: var(--text-muted);
-}
-
-.sobre__container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 48px;
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 60px;
-}
-
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-.sobre__manifesto h3 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 34px;
-    color: var(--accent-color);
-    margin-bottom: 20px;
-    font-weight: 300;
-}
-
-.sobre__manifesto p {
-    color: var(--text-secondary);
-    line-height: 1.7;
-    font-size: 15px;
-}
-
-.sobre__processo-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-.processo-card {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-    border-radius: 4px;
-    border-left: 3px solid transparent;
-    background-color: var(--card-bg);
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.processo-card.active {
-    border-left-color: var(--accent-color);
-    background-color: var(--card-accent);
-}
-
-.processo-card__number {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 32px;
-    color: rgba(255,255,255,0.2);
-}
-
-.processo-card.active .processo-card__number {
-    color: var(--accent-color);
-}
-
-.processo-card__text h4 {
+    font-weight: 600;
     color: #fff;
-    margin-bottom: 5px;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
 }
 
 .processo-card__text p {
-    color: var(--text-muted);
+    color: var(--text-secondary);
     font-size: 13px;
 }
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 768px) {
+
+    .sobre__container {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .sobre__manifesto {
+        padding: 26px;
+    }
+}
+
+/* =========================================
+   EXPERIÊNCIA / LOUSA PREMIUM
+========================================= */
+
+.lousa-geometrica{
+    position: relative;
+    padding: 140px 0;
+    overflow: hidden;
+}
+
+.lousa-geometrica::before{
+    content: '';
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(circle at center,
+        rgba(229,196,117,.12),
+        transparent 55%);
+
+    pointer-events: none;
+}
+
+.lousa-geometrica .section-tag{
+    font-size: .78rem;
+    letter-spacing: .45em;
+    text-transform: uppercase;
+    color: var(--accent-color);
+
+    margin-bottom: 18px;
+    display: inline-block;
+}
+
+.lousa-geometrica h2{
+    font-family: var(--font-serif);
+    font-size: clamp(2.8rem, 5vw, 5rem);
+    font-weight: 500;
+    line-height: .95;
+
+    color: #fff;
+
+    margin-bottom: 26px;
+}
+
+.lousa-geometrica__descricao{
+    max-width: 760px;
+
+    font-size: 1.08rem;
+    line-height: 1.9;
+
+    color: rgba(255,255,255,.68);
+
+    margin: 0 auto 70px;
+}
+
+.lousa-geometrica__texto{
+    background: linear-gradient(
+        180deg,
+        rgba(20,20,20,.96),
+        rgba(8,8,8,.96)
+    );
+
+    border: 1px solid rgba(229,196,117,.16);
+
+    border-radius: 24px;
+
+    padding: 40px;
+
+    backdrop-filter: blur(14px);
+
+    box-shadow:
+        0 0 40px rgba(0,0,0,.4),
+        inset 0 0 0 1px rgba(255,255,255,.02);
+}
+
+.lousa-geometrica__texto h3{
+    font-size: 2rem;
+    line-height: 1.1;
+
+    margin-bottom: 18px;
+
+    color: #fff;
+}
+
+.lousa-geometrica__texto p{
+    font-size: 1rem;
+    line-height: 1.9;
+
+    color: rgba(255,255,255,.72);
+
+    margin-bottom: 28px;
+}
+
+#btnLimparLousa{
+    background: transparent;
+    color: var(--accent-color);
+
+    border: 1px solid rgba(229,196,117,.35);
+
+    padding: 14px 26px;
+
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    font-size: .76rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .35s ease;
+}
+
+#btnLimparLousa:hover{
+    background: var(--accent-color);
+    color: #000;
+
+    transform: translateY(-3px);
+}
+
+#lousaCanvas{
+    border-radius: 26px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(8,8,8,.96),
+            rgba(3,3,3,.98)
+        );
+
+    box-shadow:
+        0 0 50px rgba(0,0,0,.5),
+        inset 0 0 50px rgba(229,196,117,.03);
+
+    transition: .4s ease;
+}
+
 @media(max-width: 768px){
 
-    .sobre__container{
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 30px;
-        padding: 0 22px;
+    .lousa-geometrica{
+        padding: 90px 0;
     }
 
-    .sobre__manifesto h3{
-        font-size: 32px;
-        line-height: 1.2;
+    .lousa-geometrica h2{
+        font-size: 2.5rem;
     }
 
-    .sobre__manifesto p{
-        font-size: 16px;
-        line-height: 1.7;
+    .lousa-geometrica__descricao{
+        font-size: .96rem;
+        line-height: 1.8;
+        margin-bottom: 40px;
     }
 
-    .sobre__processo-grid{
-        gap: 18px;
+    .lousa-geometrica__texto{
+        padding: 28px;
     }
 
-    .processo-card{
-        padding: 20px;
-        background: rgba(15,15,15,.92);
-        border: 1px solid rgba(229,196,117,.18);
+    .lousa-geometrica__texto h3{
+        font-size: 1.5rem;
     }
 }
