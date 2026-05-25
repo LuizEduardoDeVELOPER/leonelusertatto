@@ -529,3 +529,20 @@ if (navbarToggle && navbarMenu) {
         })
     })
 }
+
+
+
+const navbarToggle = document.getElementById('navbarToggle')
+const navbarMenu = document.querySelector('.navbar__menu')
+
+if (navbarToggle && navbarMenu) {
+    navbarToggle.addEventListener('click', () => {
+        navbarMenu.classList.toggle('open')
+    })
+
+    navbarMenu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+            navbarMenu.classList.remove('open')
+        })
+    })
+}
