@@ -1,0 +1,201 @@
+/* ========================================
+   DEPOIMENTOS — depoimentos.css
+   Criar: /css/depoimentos.css
+   Linkar no index.html após reserva.css:
+   <link href="./css/depoimentos.css" rel="stylesheet">
+======================================== */
+
+/* ---- Seção wrapper ---- */
+.depoimentos {
+    padding: 100px 0;
+}
+
+.depoimentos__inner {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ---- Cabeçalho Google (nota + estrelas + badge) ---- */
+.dep-google-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 52px;
+    flex-wrap: wrap;
+}
+
+.dep-nota {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    font-weight: 300;
+    color: #fff;
+    line-height: 1;
+}
+
+.dep-estrelas-col {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.dep-estrelas {
+    display: flex;
+    gap: 4px;
+}
+
+.dep-estrelas i {
+    color: #f4b400;
+    font-size: 20px;
+}
+
+.dep-qtd {
+    font-size: 12px;
+    color: rgba(255, 255, 255, .5);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.dep-google-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, .04);
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 30px;
+    padding: 8px 18px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, .55);
+    letter-spacing: 1px;
+}
+
+.dep-google-badge svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* ---- Grid de cards ---- */
+.dep-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.dep-card {
+    background: rgba(255, 255, 255, .03);
+    border: 1px solid rgba(229, 196, 117, .14);
+    border-radius: 6px;
+    padding: 28px 30px;
+    transition: border-color .3s, transform .3s, box-shadow .3s;
+}
+
+.dep-card:hover {
+    border-color: rgba(229, 196, 117, .38);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, .45);
+}
+
+/* ---- Topo do card (avatar + nome) ---- */
+.dep-card__top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.dep-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e5c475 0%, #8a6a1f 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: #000;
+    flex-shrink: 0;
+}
+
+.dep-card__info h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 2px;
+}
+
+.dep-card__info span {
+    font-size: 11px;
+    color: rgba(255, 255, 255, .38);
+    letter-spacing: .5px;
+}
+
+/* ---- Estrelas do card ---- */
+.dep-card__stars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 14px;
+}
+
+.dep-card__stars i {
+    color: #f4b400;
+    font-size: 13px;
+}
+
+/* ---- Aspas decorativas ---- */
+.dep-aspas {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    color: rgba(229, 196, 117, .18);
+    line-height: .5;
+    margin-bottom: 12px;
+    display: block;
+}
+
+/* ---- Texto do depoimento ---- */
+.dep-card__texto {
+    font-size: 14px;
+    color: rgba(255, 255, 255, .76);
+    line-height: 1.85;
+}
+
+/* ---- Link "Ver todas no Google" ---- */
+.dep-link-google {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.dep-link-google a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #e5c475;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(229, 196, 117, .3);
+    padding-bottom: 3px;
+    transition: opacity .2s, border-color .2s;
+}
+
+.dep-link-google a:hover {
+    opacity: .7;
+    border-color: #e5c475;
+}
+
+/* ---- Responsivo ---- */
+@media (max-width: 768px) {
+
+    .dep-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dep-nota {
+        font-size: 48px;
+    }
+}

@@ -90,6 +90,7 @@ section {
    FUNDO GEOMÉTRICO GLOBAL
 ======================================== */
 
+
 .portfolio,
 .sobre,
 .pinturas,
@@ -97,10 +98,12 @@ section {
 .lousa-geometrica,
 .reserva,
 .saiba-mais,
-.localizacao {
-    background: #050505 !important;
+.localizacao,
+.depoimentos {
+    background: #ffffff !important;
 }
 
+/* Camada 1: imagem da Flor da Vida */
 .portfolio::before,
 .sobre::before,
 .pinturas::before,
@@ -108,20 +111,28 @@ section {
 .lousa-geometrica::before,
 .reserva::before,
 .saiba-mais::before,
-.localizacao::before {
+.localizacao::before,
+.depoimentos::before {
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url('../images/geometria-bg.png');
-    background-size: 520px;
+
+    /*  Troque pelo caminho real da imagem no seu projeto.
+       A imagem que o Leonel mandou (preto sobre branco) deve
+       ficar em: ./images/flor-da-vida.png
+       Se o nome for diferente, ajuste aqui. */
+    background-image: url('../images/flor-da-vida.png');
+    background-size: 320px;          /* tamanho do tile */
     background-repeat: repeat;
-    opacity: 0.95;
-    filter: hue-rotate(var(--geo-color, 0deg)) saturate(2.2) brightness(1.35) contrast(1.25);
-    animation: geoMove 24s linear infinite, geoPulse 4s ease-in-out infinite;
+    background-attachment: fixed;    /* ← FIXO, não se move */
+
+    opacity: 0.08;                   /* sutilíssimo — só aparece que tem */
+
     z-index: 0;
     pointer-events: none;
 }
 
+/* Camada 2: overlay quase transparente pra não competir com textos */
 .portfolio::after,
 .sobre::after,
 .pinturas::after,
@@ -129,20 +140,17 @@ section {
 .lousa-geometrica::after,
 .reserva::after,
 .saiba-mais::after,
-.localizacao::after {
+.localizacao::after,
+.depoimentos::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(
-        circle at var(--x, 50%) var(--y, 50%),
-        rgba(229,196,117,.22),
-        rgba(0,0,0,.20) 30%,
-        rgba(0,0,0,.55) 100%
-    );
+    background: rgba(255, 255, 255, 0.72); /* branquinho por cima */
     z-index: 1;
     pointer-events: none;
 }
 
+/* Conteúdo fica sempre acima das camadas */
 .portfolio > *,
 .sobre > *,
 .pinturas > *,
@@ -150,20 +158,14 @@ section {
 .lousa-geometrica > *,
 .reserva > *,
 .saiba-mais > *,
-.localizacao > * {
+.localizacao > *,
+.depoimentos > * {
     position: relative;
     z-index: 2;
 }
 
-@keyframes geoMove {
-    from { background-position: 0 0; }
-    to   { background-position: 520px 520px; }
-}
-
-@keyframes geoPulse {
-    0%, 100% { opacity: 0.82; }
-    50%       { opacity: 1; }
-}
+/* Remove animações antigas — já não são necessárias */
+/* (apagar ou comentar @keyframes geoMove e geoPulse no global.css) */
 
 /* ========================================
    MODAL ORÇAMENTO

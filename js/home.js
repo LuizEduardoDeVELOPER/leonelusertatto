@@ -163,3 +163,22 @@ if (typeof Lenis !== 'undefined') {
     }
     requestAnimationFrame(raf)
 }
+/* =========================================================
+   EFEITO DOS ÍCONES SOCIAIS DA HERO
+   ========================================================= */
+
+const socialLinks = document.querySelectorAll(".hero__socials a");
+
+socialLinks.forEach((link) => {
+    link.addEventListener("mouseenter", () => {
+        link.classList.remove("social-active");
+
+        void link.offsetWidth;
+
+        link.classList.add("social-active");
+    });
+
+    link.addEventListener("mouseleave", () => {
+        link.classList.remove("social-active");
+    });
+});

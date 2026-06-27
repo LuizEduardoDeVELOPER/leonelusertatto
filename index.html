@@ -1,56 +1,935 @@
 <!DOCTYPE html>
-<html lang="pt-BR">    
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-    
-leoneltattooink
-    </title>
+    <title>Leonel Tattoo Ink</title>
 
-    <!-- Fontes Premium -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Ícones FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link href="./css/depoimentos.css" rel="stylesheet">
 
-    <!-- Arquitetura Modular de CSS -->
-   <link href="./css/global.css" rel="stylesheet">
-<link href="./css/navbar.css" rel="stylesheet">
-<link href="./css/hero.css" rel="stylesheet">
-<link href="./css/portfolio.css" rel="stylesheet">
-<link href="./css/sobre.css" rel="stylesheet">
-<link href="./css/loja-telas.css" rel="stylesheet">
-<link href="./css/reserva.css" rel="stylesheet">
+    <style>
+        /* ========================================
+           RESET & VARIÁVEIS
+        ======================================== */
+        :root {
+            --bg:          #050505;
+            --card-bg:     #111111;
+            --border:      rgba(229,196,117,.18);
+            --gold:        #e5c475;
+            --gold-dark:   #c9a96e;
+            --text:        #ffffff;
+            --text-muted:  #a0a0a0;
+        }
 
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* ========================================
+           NAVBAR
+        ======================================== */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(5,5,5,.88);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            transition: background .4s ease, box-shadow .4s ease;
+        }
+        .navbar.scrolled {
+            background: rgba(0,0,0,.78);
+            box-shadow: 0 10px 30px rgba(0,0,0,.4);
+        }
+        .navbar__inner {
+            width: min(1200px, 94%);
+            margin: 0 auto;
+            padding: 22px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+        .navbar__logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            letter-spacing: 5px;
+            font-weight: 400;
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .navbar__menu ul {
+            display: flex;
+            list-style: none;
+            gap: 28px;
+        }
+        .navbar__menu a {
+            color: rgba(255,255,255,.82);
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color .3s;
+        }
+        .navbar__menu a:hover { color: var(--gold); }
+
+        .navbar__toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            width: 42px; height: 42px;
+            background: transparent;
+            border: 1px solid rgba(229,196,117,.4);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .navbar__toggle span {
+            width: 20px; height: 2px;
+            background: var(--gold);
+            display: block;
+            transition: .3s;
+        }
+
+        @media (max-width: 768px) {
+            .navbar__toggle { display: flex; }
+            .navbar__menu {
+                position: absolute;
+                top: calc(100% + 10px);
+                right: 18px;
+                width: 240px;
+                background: rgba(8,8,8,.97);
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                padding: 14px;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: .3s ease;
+                z-index: 9999;
+            }
+            .navbar__menu.open {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+            .navbar__menu ul { flex-direction: column; gap: 0; }
+            .navbar__menu li { border-bottom: 1px solid rgba(255,255,255,.07); }
+            .navbar__menu li:last-child { border-bottom: none; }
+            .navbar__menu a { display: block; padding: 13px 8px; }
+        }
+
+        /* ========================================
+           REVEAL
+        ======================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity .9s ease, transform .9s ease;
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* ========================================
+           FUNDO GEOMÉTRICO GLOBAL
+        ======================================== */
+        .geo-bg {
+            position: relative;
+            background: #050505 !important;
+            overflow: hidden;
+        }
+        .geo-bg::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url('./images/geometria-bg.png');
+            background-size: 520px;
+            background-repeat: repeat;
+            opacity: 0.92;
+            filter: hue-rotate(0deg) saturate(2.2) brightness(1.3) contrast(1.2);
+            animation: geoMove 24s linear infinite, geoPulse 4s ease-in-out infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .geo-bg::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(229,196,117,.18), rgba(0,0,0,.25) 35%, rgba(0,0,0,.6) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .geo-bg > * { position: relative; z-index: 2; }
+
+        @keyframes geoMove {
+            from { background-position: 0 0; }
+            to   { background-position: 520px 520px; }
+        }
+        @keyframes geoPulse {
+            0%, 100% { opacity: 0.82; }
+            50%       { opacity: 1; }
+        }
+
+        /* ========================================
+           SECTION HEADERS
+        ======================================== */
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 0 20px;
+        }
+        .section-label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: var(--gold);
+            text-transform: uppercase;
+        }
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(30px, 5vw, 44px);
+            font-weight: 300;
+            color: #fff;
+        }
+
+        /* ========================================
+           HERO
+        ======================================== */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            min-height: 600px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #0a0a0a;
+            background-image: url('./images/leonel.PNG');
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+        }
+        .hero__overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: linear-gradient(to bottom, rgba(0,0,0,.30) 0%, rgba(0,0,0,.12) 35%, rgba(0,0,0,.68) 100%);
+        }
+        .hero__content {
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            max-width: 860px;
+            padding: 0 24px;
+            text-align: center;
+            margin-top: 80px;
+        }
+        .hero__title {
+            margin-bottom: 22px;
+            color: #fff;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(38px, 7.5vw, 92px);
+            font-weight: 300;
+            line-height: 1;
+            letter-spacing: -1px;
+            text-shadow: 0 10px 40px rgba(0,0,0,.7);
+        }
+        .hero__title em {
+            display: block;
+            color: var(--gold);
+            font-style: normal;
+        }
+        .hero__sub {
+            max-width: 540px;
+            margin: 0 auto 0;
+            color: rgba(255,255,255,.88);
+            font-size: clamp(14px, 2.2vw, 17px);
+            line-height: 1.75;
+            text-shadow: 0 4px 20px rgba(0,0,0,.8);
+        }
+
+        /* Sociais — lateral esquerda */
+        .hero__socials {
+            position: absolute;
+            top: 50%;
+            left: 36px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            z-index: 10;
+        }
+        .hero__socials::before {
+            content: "";
+            width: 1px;
+            height: 56px;
+            margin-bottom: 4px;
+            background: linear-gradient(to bottom, transparent, rgba(213,173,85,.95));
+        }
+        .hero__socials a {
+            width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid rgba(255,255,255,.38);
+            border-radius: 50%;
+            color: #fff;
+            font-size: 20px;
+            text-decoration: none;
+            background: rgba(0,0,0,.38);
+            backdrop-filter: blur(8px);
+            transition: transform .25s, color .25s, background .25s, border-color .25s, box-shadow .25s;
+        }
+        .hero__socials a:hover {
+            color: #111;
+            background: var(--gold);
+            border-color: var(--gold);
+            transform: translateX(10px) scale(1.12);
+            box-shadow: 0 0 0 6px rgba(213,173,85,.18), 0 12px 28px rgba(0,0,0,.45);
+        }
+
+        @media (max-width: 768px) {
+            .hero__socials { left: 14px; gap: 10px; }
+            .hero__socials::before { height: 36px; }
+            .hero__socials a { width: 40px; height: 40px; font-size: 17px; }
+        }
+
+        /* ========================================
+           PORTFÓLIO — CARROSSEL DUPLO
+        ======================================== */
+        .portfolio { padding: 100px 0; }
+
+        /* --- Carrossel --- */
+        .carrossel-bloco { margin-bottom: 70px; }
+        .carrossel-bloco:last-child { margin-bottom: 0; }
+
+        .carrossel-titulo {
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(26px, 4vw, 38px);
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+        .carrossel-subtitulo {
+            text-align: center;
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 32px;
+        }
+
+        .carrossel-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+        .carrossel-track {
+            display: flex;
+            gap: 18px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            padding: 8px 48px 20px;
+            scrollbar-width: none;
+        }
+        .carrossel-track::-webkit-scrollbar { display: none; }
+
+        .carrossel-card {
+            flex: 0 0 auto;
+            width: 320px;
+            scroll-snap-align: start;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            position: relative;
+            transition: transform .35s ease, box-shadow .35s ease;
+        }
+        .carrossel-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 48px rgba(0,0,0,.55);
+        }
+        .carrossel-card img {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            display: block;
+            transition: transform .5s ease;
+        }
+        .carrossel-card:hover img { transform: scale(1.04); }
+
+        .carrossel-badge {
+            position: absolute;
+            top: 14px; left: 14px;
+            background: var(--gold);
+            color: #000;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            padding: 4px 10px;
+            text-transform: uppercase;
+        }
+        .carrossel-info {
+            background: var(--card-bg);
+            padding: 20px 22px;
+        }
+        .carrossel-info h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+        .carrossel-info p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+        .btn-solicitar {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 11px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: background .3s, color .3s;
+        }
+        .btn-solicitar:hover { background: var(--gold); color: #000; }
+
+        /* Setas de navegação */
+        .carrossel-nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 18px;
+        }
+        .carrossel-btn {
+            width: 42px; height: 42px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            background: rgba(255,255,255,.04);
+            color: var(--gold);
+            font-size: 16px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background .3s, border-color .3s, transform .2s;
+        }
+        .carrossel-btn:hover {
+            background: rgba(229,196,117,.12);
+            border-color: var(--gold);
+            transform: scale(1.08);
+        }
+
+        @media (max-width: 768px) {
+            .carrossel-track { padding: 8px 18px 20px; gap: 14px; }
+            .carrossel-card { width: 260px; }
+            .carrossel-card img { height: 340px; }
+        }
+
+        /* ========================================
+           TEXTO ABAIXO DO CARROSSEL DE GEOMETRIA
+        ======================================== */
+        .geo-texto {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 0 24px;
+            text-align: center;
+        }
+        .geo-texto h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(22px, 3.5vw, 32px);
+            font-weight: 300;
+            color: var(--gold);
+            margin-bottom: 22px;
+            line-height: 1.2;
+        }
+        .geo-texto p {
+            color: rgba(255,255,255,.76);
+            font-size: 15px;
+            line-height: 1.9;
+            margin-bottom: 14px;
+        }
+        .geo-texto p:last-child { margin-bottom: 0; }
+
+        .divider-geo {
+            width: 60px;
+            height: 1px;
+            background: var(--gold);
+            margin: 36px auto;
+            opacity: .4;
+        }
+
+        /* ========================================
+           COMO SUA ARTE É CRIADA
+        ======================================== */
+        .como-criada { padding: 100px 0; }
+        .como-criada__inner {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 0 24px;
+            text-align: center;
+        }
+        .como-criada__titulo {
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 36px;
+            display: block;
+        }
+        .como-criada__texto {
+            color: rgba(255,255,255,.82);
+            font-size: 15px;
+            line-height: 2;
+        }
+        .como-criada__texto strong {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* ========================================
+           ATENDIMENTO PRIVADO E EXCLUSIVO
+        ======================================== */
+        .atendimento { padding: 100px 0; }
+        .atendimento__inner {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 0 24px;
+            text-align: center;
+        }
+        .atendimento__tag {
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: var(--gold);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 18px;
+        }
+        .atendimento__titulo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+        .atendimento__box {
+            background: rgba(255,255,255,.03);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 40px 44px;
+            text-align: left;
+        }
+        .atendimento__box p {
+            color: rgba(255,255,255,.8);
+            font-size: 15px;
+            line-height: 1.95;
+            margin-bottom: 14px;
+        }
+        .atendimento__box p:last-child { margin-bottom: 0; }
+        .atendimento__box strong { color: #fff; }
+
+        @media (max-width: 768px) {
+            .atendimento__box { padding: 28px 22px; }
+        }
+
+        /* ========================================
+           UMA EXPERIÊNCIA AUTORAL
+        ======================================== */
+        .experiencia { padding: 100px 0; }
+        .experiencia__inner {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .experiencia__header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .experiencia__header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(28px, 5vw, 46px);
+            font-weight: 300;
+            color: #fff;
+        }
+        .experiencia__box {
+            background: rgba(255,255,255,.03);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 40px 44px;
+        }
+        .experiencia__box p {
+            color: rgba(255,255,255,.8);
+            font-size: 15px;
+            line-height: 2;
+            margin-bottom: 14px;
+        }
+        .experiencia__box p:last-child { margin-bottom: 0; }
+
+        @media (max-width: 768px) {
+            .experiencia__box { padding: 28px 22px; }
+        }
+
+        /* ========================================
+           SOBRE — LEONEL PEDRO
+        ======================================== */
+        .sobre-leonel { padding: 100px 0; }
+        .sobre-leonel__inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 1fr 1.6fr;
+            gap: 56px;
+            align-items: center;
+        }
+        .sobre-leonel__nome-bloco {}
+        .sobre-leonel__nome {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(36px, 5vw, 58px);
+            font-weight: 300;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+        .sobre-leonel__cargo {
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: var(--gold);
+            text-transform: uppercase;
+            line-height: 1.6;
+        }
+        .sobre-leonel__linha {
+            width: 40px;
+            height: 1px;
+            background: var(--gold);
+            margin: 22px 0;
+            opacity: .5;
+        }
+        .sobre-leonel__bio {
+            color: rgba(255,255,255,.8);
+            font-size: 15px;
+            line-height: 2;
+        }
+        .sobre-leonel__bio p { margin-bottom: 14px; }
+        .sobre-leonel__bio p:last-child { margin-bottom: 0; }
+
+        @media (max-width: 768px) {
+            .sobre-leonel__inner {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+
+        /* ========================================
+           LOCALIZAÇÃO
+        ======================================== */
+        .localizacao { padding: 100px 0; }
+        .localizacao__inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 40px;
+            align-items: stretch;
+        }
+        .localizacao__info {
+            background: rgba(8,8,8,.82);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 40px;
+        }
+        .localizacao__info h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 38px;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 28px;
+        }
+        .localizacao__info p {
+            font-size: 15px;
+            line-height: 1.85;
+            color: rgba(255,255,255,.75);
+            margin-bottom: 10px;
+        }
+        .localizacao__info p:last-child { margin-bottom: 0; }
+        .localizacao__info strong { color: #fff; }
+        .localizacao__info a { color: var(--gold); font-weight: 600; text-decoration: none; }
+        .localizacao__mapa {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .localizacao__mapa iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 360px;
+            border: 0;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .localizacao__inner { grid-template-columns: 1fr; }
+            .localizacao__mapa iframe { min-height: 300px; }
+        }
+
+        /* ========================================
+           RESERVA
+        ======================================== */
+        .reserva { padding: 120px 0; }
+        .reserva__inner {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 24px;
+            text-align: center;
+        }
+        .reserva__inner h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(26px, 4vw, 40px);
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 18px;
+            line-height: 1.2;
+        }
+        .reserva__inner p {
+            color: rgba(255,255,255,.72);
+            font-size: 15px;
+            line-height: 1.85;
+            margin-bottom: 38px;
+        }
+        .btn-reserva {
+            background: var(--gold-dark);
+            color: #000;
+            border: none;
+            padding: 18px 44px;
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform .3s, box-shadow .3s;
+        }
+        .btn-reserva:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 36px rgba(229,196,117,.35);
+        }
+
+        /* ========================================
+           FOOTER
+        ======================================== */
+        .footer {
+            background: #020202;
+            border-top: 1px solid var(--border);
+            padding: 60px 8%;
+            text-align: center;
+        }
+        .footer__brand h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 30px;
+            letter-spacing: 5px;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+        .footer__brand p {
+            color: var(--gold);
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+        .footer__links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin: 26px 0;
+            flex-wrap: wrap;
+        }
+        .footer__links a {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: opacity .2s;
+        }
+        .footer__links a:hover { opacity: .65; }
+        .footer__lgpd {
+            max-width: 780px;
+            margin: 0 auto 20px;
+            color: #888;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+        .footer__copy { font-size: 11px; color: #555; margin-top: 20px; }
+
+        /* ========================================
+           MODAL ORÇAMENTO
+        ======================================== */
+        .modal-orcamento {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.80);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: .4s ease;
+            z-index: 99999;
+            padding: 20px;
+        }
+        .modal-orcamento.open { opacity: 1; visibility: visible; }
+        .modal-orcamento__content {
+            width: 100%;
+            max-width: 600px;
+            background: #111;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 20px;
+            padding: 40px 36px;
+            position: relative;
+            transform: translateY(40px);
+            transition: .4s ease;
+        }
+        .modal-orcamento.open .modal-orcamento__content { transform: translateY(0); }
+        .modal-orcamento__content h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .modal-orcamento__content p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 26px;
+        }
+        .modal-orcamento__close {
+            position: absolute;
+            top: 18px; right: 20px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            opacity: .55;
+            transition: opacity .2s;
+            line-height: 1;
+        }
+        .modal-orcamento__close:hover { opacity: 1; }
+        .modal-form .form-group { margin-bottom: 14px; }
+        .modal-form input,
+        .modal-form select,
+        .modal-form textarea {
+            width: 100%;
+            background: #1a1a1a;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 8px;
+            padding: 14px 16px;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            outline: none;
+            transition: border-color .2s;
+        }
+        .modal-form input:focus,
+        .modal-form select:focus,
+        .modal-form textarea:focus { border-color: var(--gold); }
+        .modal-form select option { background: #1a1a1a; }
+        .btn-enviar {
+            width: 100%;
+            padding: 16px;
+            background: var(--gold);
+            color: #000;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: .3s ease;
+        }
+        .btn-enviar:hover { background: #f0d080; transform: translateY(-2px); }
+
+        /* ========================================
+           BOTÃO FLUTUANTE WHATSAPP
+        ======================================== */
+        .btn-flutuante {
+            position: fixed;
+            bottom: 28px; right: 28px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 26px;
+            background: var(--gold);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 8px 28px rgba(229,196,117,.38);
+            transition: .3s ease;
+            text-decoration: none;
+        }
+        .btn-flutuante i { font-size: 18px; }
+        .btn-flutuante:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 36px rgba(229,196,117,.5);
+        }
+        @media (max-width: 768px) {
+            .btn-flutuante { right: 16px; bottom: 18px; padding: 13px 20px; font-size: 10px; }
+        }
+    </style>
 </head>
 <body>
 
-
-    <!-- BARRA DE NAVEGAÇÃO -->
+    <!-- ============================
+         NAVBAR
+    ============================= -->
     <header class="navbar" id="navbar">
         <div class="navbar__inner">
-            
-<a href="#hero" class="navbar__logo">LEONELTATTOOINK</a>
+            <a href="#hero" class="navbar__logo">Leonel Tattoo Ink</a>
 
-<button class="navbar__toggle" id="navbarToggle" aria-label="Abrir menu">
-    <span></span>
-    <span></span>
-    <span></span>
-</button>
+            <button class="navbar__toggle" id="navbarToggle" aria-label="Abrir menu">
+                <span></span><span></span><span></span>
+            </button>
 
-            <nav class="navbar__menu">
+            <nav class="navbar__menu" id="navbarMenu">
                 <ul>
-            <li><a href="#hero">Lar</a></li>
-<li><a href="#lousa-geometrica">Experiência</a></li>
-<li><a href="#sobre">Sobre</a></li>
-<li><a href="#tatuagens">Tatuagens</a></li>
-<li><a href="#pinturas">Pinturas</a></li>
-<li><a href="#loja">Loja</a></li>
-<li><a href="#reserva">Reserva</a></li>
-<li><a href="#localizacao">Localização</a></li>
+                    <li><a href="#hero">Início</a></li>
+                    <li><a href="#portfolio">Portfólio</a></li>
+                    <li><a href="#sobre">Sobre</a></li>
+                    <li><a href="#atendimento">Atendimento</a></li>
+                    <li><a href="#localizacao">Localização</a></li>
+                    <li><a href="#reserva">Reserva</a></li>
+                    <li><a href="#depoimentos">Depoimentos</a></li>
                 </ul>
             </nav>
         </div>
@@ -58,579 +937,540 @@ leoneltattooink
 
     <main>
 
-      <!-- SEÇÃO HERO -->
-<section class="hero" id="hero">
+        <!-- ============================
+             HERO
+        ============================= -->
+        <section class="hero" id="hero">
+            <div class="hero__overlay"></div>
 
-    <!-- IMAGEM REAL -->
-   
-    >
+            <div class="hero__content">
+                <h1 class="hero__title">
+                    Sua pele merece respeito,
+                    <em>sua história merece arte.</em>
+                </h1>
+                <p class="hero__sub">Seja bem-vindo ao meu espaço.</p>
+            </div>
 
-    <!-- OVERLAY -->
-    <div class="hero__overlay"></div>
+            <div class="hero__socials">
+                <a href="https://www.instagram.com/leoneltattooink/" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" aria-label="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://wa.me/5561982239427" target="_blank" aria-label="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+        </section>
 
-    <!-- CONTEÚDO -->
-    <div class="hero__content">
-
-        <span class="hero__eyebrow">
-            
-        </span>
-
-        <h1 class="hero__title">
-
-            
-            <em></em>
-        </h1>
-
-        <p class="hero__sub">
-            Projetos autorais desenvolvidos
-            sob medida para respeitar a sua
-            anatomia e contar a sua história.
-        </p>
-
-        <div class="hero__actions">
-
-        
-            <a href="#sobre" class="btn btn--ghost">
-                Conhecer Processo
-            </a>
-
-        </div>
-
-    </div>
-
-    <!-- REDES -->
-    <div class="hero__socials">
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-tiktok"></i></a>
-        <a href="#"><i class="fab fa-youtube"></i></a>
-        <a href="https://facebook.com" target="_blank" aria-label="Facebook">
-    <i class="fab fa-facebook-f"></i>
-</a>
-    </div>
-
-</section>
-
-
-
-
-
-
-
-
-
-
-        <!-- SEÇÃO PORTFÓLIO (10 CARDS) -->
-        <section class="portfolio" id="tatuagens">
+        <!-- ============================
+             PORTFÓLIO — CARROSSÉIS
+        ============================= -->
+        <section class="portfolio geo-bg" id="portfolio">
             <div class="section-header reveal">
                 <span class="section-label">Portfólio</span>
-                <h2 class="section-title">Nossas Especialidades</h2>
-            </div>
-            
-            <div class="produtos__grid">
-                <!-- 5 Cards de Geometria -->
-                <div class="prod-card reveal js-tilt">
-                    <div class="prod-card__img-container">
-                        <span class="prod-card__badge">GEOMETRIA</span>
-                        <img src="./images/braco-geometria.jpeg" alt="Geometria no braço" class="prod-card__img">
-                    </div>
-                    <div class="prod-card__info">
-                        <h3>Geometria no Braço</h3>
-                        <p>Linhas precisas e encaixe anatômico.</p>
-                        <button class="btn-solicitar">Solicitar Orçamento</button>
-                    </div>
-                </div>
-
-                <div class="prod-card reveal js-tilt">
-                    <div class="prod-card__img-container">
-                        <span class="prod-card__badge">GEOMETRIA</span>
-                        <img src="./images/coxa-geometria.jpeg" alt="Geometria na coxa" class="prod-card__img">
-                    </div>
-                    <div class="prod-card__info">
-                        <h3>Geometria na Coxa</h3>
-                        <p>Simetria e profundidade no design.</p>
-                        <button class="btn-solicitar">Solicitar Orçamento</button>
-                    </div>
-                </div>
-
-                <div class="prod-card reveal js-tilt">
-                    <div class="prod-card__img-container">
-                        <span class="prod-card__badge">GEOMETRIA</span>
-                        <img src="./images/coxa-perna-geometria.jpeg" alt="Fechamento perna" class="prod-card__img">
-                    </div>
-                    <div class="prod-card__info">
-                        <h3>Fechamento Perna</h3>
-                        <p>Pontilhismo avançado integrado.</p>
-                        <button class="btn-solicitar">Solicitar Orçamento</button>
-                    </div>
-                </div>
-
-                <div class="prod-card reveal js-tilt">
-                    <div class="prod-card__img-container">
-                        <span class="prod-card__badge">GEOMETRIA</span>
-                        <img src="./images/ombro-geometria.jpeg" alt="Geometria ombro" class="prod-card__img">
-                    </div>
-                    <div class="prod-card__info">
-                        <h3>Geometria no Ombro</h3>
-                        <p>Fluidez acompanhando o movimento muscular.</p>
-                        <button class="btn-solicitar">Solicitar Orçamento</button>
-                    </div>
-                </div>
-
-                <div class="prod-card reveal js-tilt">
-                    <div class="prod-card__img-container">
-                        <span class="prod-card__badge">GEOMETRIA</span>
-                        <img src="./images/perna-geometria.jpeg" alt="Perna geométrica" class="prod-card__img">
-                    </div>
-                    <div class="prod-card__info">
-                        <h3>Perna Geométrica</h3>
-                        <p>Preenchimento contrastante e simétrico.</p>
-                        <button class="btn-solicitar">Solicitar Orçamento</button>
-                    </div>
-                </div>
-
-                <!-- 5 Cards de Realismo -->
-                <div class="prod-card reveal js-tilt">
-                    <div class="prod-card__img-container">
-                        <span class="prod-card__badge">REALISMO</span>
-                        <img src="./images/braco-fechado-realismo.jpeg" alt="Fechamento realista" class="prod-card__img">
-                    </div>
-                    <div class="prod-card__info">
-                        <h3>Fechamento Realista</h3>
-                        <p>Sombreado denso com transições suaves.</p>
-                        <button class="btn-solicitar">Solicitar Orçamento</button>
-                    </div>
-                </div>
-
-                <div class="prod-card reveal js-tilt">
-                    <div class="prod-card__img-container">
-                        <span class="prod-card__badge">REALISMO</span>
-                        <img src="./images/costa-realismo.jpeg" alt="Projeto costas" class="prod-card__img">
-                    </div>
-                    <div class="prod-card__info">
-                        <h3>Projeto Costas</h3>
-                        <p>Grande escala rico em detalhes.</p>
-                        <button class="btn-solicitar">Solicitar Orçamento</button>
-                    </div>
-                </div>
-
-                <div class="prod-card reveal js-tilt">
-                    <div class="prod-card__img-container">
-                        <span class="prod-card__badge">REALISMO</span>
-                        <img src="./images/ombro-braco-realismo.jpeg" alt="Realismo sombreado" class="prod-card__img">
-                    </div>
-                    <div class="prod-card__info">
-                        <h3>Realismo Sombreado</h3>
-                        <p>Contraste marcante e texturas realistas.</p>
-                        <button class="btn-solicitar">Solicitar Orçamento</button>
-                    </div>
-                </div>
-
-                <div class="prod-card reveal js-tilt">
-                    <div class="prod-card__img-container">
-                        <span class="prod-card__badge">REALISMO</span>
-                        <img src="./images/ombro-realismo.jpeg" alt="Foco realista" class="prod-card__img">
-                    </div>
-                    <div class="prod-card__info">
-                        <h3>Foco Realista</h3>
-                        <p>Retrato e profundidade black and grey.</p>
-                        <button class="btn-solicitar">Solicitar Orçamento</button>
-                    </div>
-                </div>
-
-                <div class="prod-card reveal js-tilt">
-                    <div class="prod-card__img-container">
-                        <span class="prod-card__badge">REALISMO</span>
-                        <img src="./images/perna-realismo.jpeg" alt="Realismo na perna" class="prod-card__img">
-                    </div>
-                    <div class="prod-card__info">
-                        <h3>Realismo na Perna</h3>
-                        <p>Aplicação sólida com alta durabilidade.</p>
-                        <button class="btn-solicitar">Solicitar Orçamento</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SEÇÃO SOBRE & CONCEITO -->
-        <section class="sobre" id="sobre">
-            <div class="section-header reveal">
-                <span class="section-label">O Conceito</span>
-                <h2 class="section-title">Como Criamos Sua Arte</h2>
+                <h2 class="section-title">Especialidades</h2>
             </div>
 
-            <div class="sobre__container reveal">
-                <div class="sobre__manifesto">
-                    <div id="tab-content-01" class="tab-content active">
-                        <h3>01 . O encaixe perfeito na pele</h3>
-                        <p>O trabalho do Leonel vai além do adorno estético. Analisamos minuciosamente o fluxo muscular e a estrutura do corpo para que a geometria ou o realismo flua organicamente.</p>
-                    </div>
-                    <div id="tab-content-02" class="tab-content">
-                        <h3>02 . Simetria Avançada & Exclusividade</h3>
-                        <p>Utilizando projeções digitais de alta precisão e conceitos de geometria sagrada, criamos uma arte 100% autoral. Garantia absoluta de um projeto exclusivo.</p>
-                    </div>
-                    <div id="tab-content-03" class="tab-content">
-                        <h3>03 . Longevidade e Rigor Técnico</h3>
-                        <p>A execução une pigmentação sólida de alto contraste com materiais premium da indústria. Todo o procedimento segue protocolos rigorosos de biossegurança.</p>
-                    </div>
-                </div>
+            <!-- CARROSSEL 1: GEOMETRIA SAGRADA -->
+            <div class="carrossel-bloco reveal">
+                <p class="carrossel-subtitulo">Arte & Precisão</p>
+                <h2 class="carrossel-titulo">Geometria Sagrada</h2>
 
-                <div class="sobre__processo-grid">
-                    <div class="processo-card active" data-tab="01">
-                        <div class="processo-card__number">01</div>
-                        <div class="processo-card__text">
-                            <h4>Estudo Anatômico</h4>
-                            <p>Análise de fluxo e linhas do corpo.</p>
+                <div class="carrossel-wrap">
+                    <div class="carrossel-track" id="track-geo">
+                        <div class="carrossel-card">
+                            <span class="carrossel-badge">Geometria</span>
+                            <img src="./images/braco-geometria.jpeg" alt="Geometria no Braço">
+                            <div class="carrossel-info">
+                                <h3>Geometria no Braço</h3>
+                                <p>Linhas precisas e encaixe anatômico.</p>
+                                <button class="btn-solicitar" onclick="abrirModal()">Solicitar Orçamento</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="processo-card" data-tab="02">
-                        <div class="processo-card__number">02</div>
-                        <div class="processo-card__text">
-                            <h4>Desenho Autoral</h4>
-                            <p>Criação digital e simetria exclusiva.</p>
+                        <div class="carrossel-card">
+                            <span class="carrossel-badge">Geometria</span>
+                            <img src="./images/coxa-geometria.jpeg" alt="Geometria na Coxa">
+                            <div class="carrossel-info">
+                                <h3>Geometria na Coxa</h3>
+                                <p>Simetria e profundidade no design.</p>
+                                <button class="btn-solicitar" onclick="abrirModal()">Solicitar Orçamento</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="processo-card" data-tab="03">
-                        <div class="processo-card__number">03</div>
-                        <div class="processo-card__text">
-                            <h4>Execução Precisa</h4>
-                            <p>Aplicação sólida e biossegurança.</p>
+                        <div class="carrossel-card">
+                            <span class="carrossel-badge">Geometria</span>
+                            <img src="./images/coxa-perna-geometria.jpeg" alt="Fechamento Perna">
+                            <div class="carrossel-info">
+                                <h3>Fechamento Perna</h3>
+                                <p>Pontilhismo avançado integrado.</p>
+                                <button class="btn-solicitar" onclick="abrirModal()">Solicitar Orçamento</button>
+                            </div>
+                        </div>
+                        <div class="carrossel-card">
+                            <span class="carrossel-badge">Geometria</span>
+                            <img src="./images/ombro-geometria.jpeg" alt="Geometria no Ombro">
+                            <div class="carrossel-info">
+                                <h3>Geometria no Ombro</h3>
+                                <p>Fluidez acompanhando o movimento muscular.</p>
+                                <button class="btn-solicitar" onclick="abrirModal()">Solicitar Orçamento</button>
+                            </div>
+                        </div>
+                        <div class="carrossel-card">
+                            <span class="carrossel-badge">Geometria</span>
+                            <img src="./images/perna-geometria.jpeg" alt="Perna Geométrica">
+                            <div class="carrossel-info">
+                                <h3>Perna Geométrica</h3>
+                                <p>Preenchimento contrastante e simétrico.</p>
+                                <button class="btn-solicitar" onclick="abrirModal()">Solicitar Orçamento</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- SEÇÃO PINTURAS -->
-        <section class="pinturas" id="pinturas">
-            <div class="section-header reveal">
-                <span class="section-label">Arte em Tela</span>
-                <h2 class="section-title">Pinturas & Coleções</h2>
-            </div>
-            <div class="pinturas__grid reveal">
-                <div class="pintura-card js-tilt">
-                    <img src="./images/coxa-geometria.jpeg" alt="Metatrons Cube" class="pintura-card__img">
-                    <div class="pintura-card__info">
-                        <h3>Metatrons Cube</h3>
-                        <p>Acrílica sobre tela - 80x80cm</p>
-                    </div>
-                </div>
-                <div class="pintura-card js-tilt">
-                    <img src="./images/perna-geometria.jpeg" alt="Expansão Áurea" class="pintura-card__img">
-                    <div class="pintura-card__info">
-                        <h3>Expansão Áurea</h3>
-                        <p>Óleo e nanquim - 100x70cm</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SEÇÃO LOJA -->
-        <section class="loja" id="loja">
-            <div class="section-header reveal">
-                <span class="section-label">Estilo LifeStyle</span>
-                <h2 class="section-title">Loja Oficial</h2>
-            </div>
-            <div class="loja__grid reveal">
-                <div class="produto-item">
-                    <div class="produto-item__img-wrapper">
-                        <img src="./images/ombro-geometria.jpeg" alt="Fine Art">
-                    </div>
-                    <h4>Fine Art Print - Geometria</h4>
-                    <p class="produto-item__preco">R$ 180,00</p>
-                    <button class="btn-loja">Comprar</button>
-                </div>
-                <div class="produto-item">
-                    <div class="produto-item__img-wrapper">
-                        <img src="./images/ombro-realismo.jpeg" alt="Camiseta">
-                    </div>
-                    <h4>Camiseta Cyber Blackwork</h4>
-                    <p class="produto-item__preco">R$ 140,00</p>
-                    <button class="btn-loja">Comprar</button>
-                </div>
-            </div>
-        </section>
-
-
-
-
-<section class="lousa-geometrica" id="lousa-geometrica">
-
-    <div class="section-header reveal">
-        <span class="section-label">Experiência Interativa</span>
-        <h2 class="section-title">Explore a Geometria Sagrada</h2>
-    </div>
-
-    <div class="lousa-geometrica__container reveal">
-
-        <div class="lousa-geometrica__texto">
-            <h3>Brinque com formas, linhas e simetria.</h3>
-            <p>
-                Passe o mouse pela lousa e veja como linhas geométricas
-                se conectam, simulando a lógica visual usada em projetos
-                de tatuagem geométrica.
-            </p>
-
-            <button type="button" class="btn-limpar-lousa" id="btnLimparLousa">
-                Limpar Lousa
-            </button>
-        </div>
-
-        <canvas id="lousaCanvas"></canvas>
-
-    </div>
-
-</section>
-
-
-
-
-
-</main>
-           <!-- SEÇÃO RESERVA -->
-        <section class="reserva" id="reserva">
-
-            <div class="section-header reveal">
-
-                <span class="section-label">
-                    Atendimento Exclusivo
-                </span>
-
-                <h2 class="section-title">
-                    Reserve Sua Sessão
-                </h2>
-
-            </div>
-
-            <div class="reserva__container reveal">
-
-                <div class="reserva__content">
-
-                    <h3>
-                        Arte autoral desenvolvida
-                        exclusivamente para você.
-                    </h3>
-
-                    <p>
-                        Cada projeto é pensado
-                        individualmente para respeitar
-                        anatomia, conceito e identidade.
-                    </p>
-
-                    <button
-                        type="button"
-                        class="btn-reserva">
-
-                        Solicitar Orçamento
-
+                <div class="carrossel-nav">
+                    <button class="carrossel-btn" onclick="scrollCarrossel('track-geo', -1)" aria-label="Anterior">
+                        <i class="fas fa-chevron-left"></i>
                     </button>
-
+                    <button class="carrossel-btn" onclick="scrollCarrossel('track-geo', 1)" aria-label="Próximo">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
-
             </div>
 
+            <!-- TEXTO GEOMETRIA SAGRADA -->
+            <div class="geo-texto reveal" style="margin: 50px auto 70px;">
+                <h3>A Geometria Sagrada: Muito Além do Traço, a Arquitetura da Alma</h3>
+                <p>A Geometria Sagrada não é apenas um estilo de tatuagem; é a linguagem visual do universo. Desde as espirais das galáxias até a estrutura de uma folha ou o DNA humano, existem padrões geométricos que organizam tudo o que existe. Quando trazemos esses padrões para a pele, não estamos apenas desenhando formas, estamos conectando você à ordem e à harmonia do cosmos.</p>
+                <p>Para mim, tatuar geometria sagrada é um processo de alma e de profunda responsabilidade. Cada linha, círculo, mandala ou polígono carrega uma importância vital: eles são os blocos de construção da realidade, capazes de transmitir equilíbrio, proteção e expansão espiritual.</p>
+            </div>
+
+            <div class="divider-geo"></div>
+
+            <!-- CARROSSEL 2: REALISMO -->
+            <div class="carrossel-bloco reveal">
+                <p class="carrossel-subtitulo">Alta Definição</p>
+                <h2 class="carrossel-titulo">Portfólio Realismo</h2>
+
+                <div class="carrossel-wrap">
+                    <div class="carrossel-track" id="track-real">
+                        <div class="carrossel-card">
+                            <span class="carrossel-badge">Realismo</span>
+                            <img src="./images/braco-fechado-realismo.jpeg" alt="Fechamento Realista">
+                            <div class="carrossel-info">
+                                <h3>Fechamento Realista</h3>
+                                <p>Sombreado denso com transições suaves.</p>
+                                <button class="btn-solicitar" onclick="abrirModal()">Solicitar Orçamento</button>
+                            </div>
+                        </div>
+                        <div class="carrossel-card">
+                            <span class="carrossel-badge">Realismo</span>
+                            <img src="./images/costa-realismo.jpeg" alt="Projeto Costas">
+                            <div class="carrossel-info">
+                                <h3>Projeto Costas</h3>
+                                <p>Grande escala rico em detalhes.</p>
+                                <button class="btn-solicitar" onclick="abrirModal()">Solicitar Orçamento</button>
+                            </div>
+                        </div>
+                        <div class="carrossel-card">
+                            <span class="carrossel-badge">Realismo</span>
+                            <img src="./images/ombro-braco-realismo.jpeg" alt="Realismo Sombreado">
+                            <div class="carrossel-info">
+                                <h3>Realismo Sombreado</h3>
+                                <p>Contraste marcante e texturas realistas.</p>
+                                <button class="btn-solicitar" onclick="abrirModal()">Solicitar Orçamento</button>
+                            </div>
+                        </div>
+                        <div class="carrossel-card">
+                            <span class="carrossel-badge">Realismo</span>
+                            <img src="./images/ombro-realismo.jpeg" alt="Foco Realista">
+                            <div class="carrossel-info">
+                                <h3>Foco Realista</h3>
+                                <p>Retrato e profundidade black and grey.</p>
+                                <button class="btn-solicitar" onclick="abrirModal()">Solicitar Orçamento</button>
+                            </div>
+                        </div>
+                        <div class="carrossel-card">
+                            <span class="carrossel-badge">Realismo</span>
+                            <img src="./images/perna-realismo.jpeg" alt="Realismo na Perna">
+                            <div class="carrossel-info">
+                                <h3>Realismo na Perna</h3>
+                                <p>Aplicação sólida com alta durabilidade.</p>
+                                <button class="btn-solicitar" onclick="abrirModal()">Solicitar Orçamento</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carrossel-nav">
+                    <button class="carrossel-btn" onclick="scrollCarrossel('track-real', -1)" aria-label="Anterior">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="carrossel-btn" onclick="scrollCarrossel('track-real', 1)" aria-label="Próximo">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- TEXTO REALISMO -->
+            <div class="geo-texto reveal" style="margin: 50px auto 0;">
+                <h3>O Realismo: A Arte de Eternizar a Realidade na Pele</h3>
+                <p>Tatuar o realismo é o desafio de enganar o olhar, trazendo para a pele a profundidade, as texturas, as luzes e as sombras do mundo real. Seja um retrato expressivo, a força de um animal ou a precisão de um objeto, o realismo transforma a sua pele em uma tela viva de alta definição.</p>
+                <p>Para mim, esse estilo vai muito além da técnica perfeita. É sobre conexão, sensibilidade e a responsabilidade de dar vida a algo que tem um valor inestimável para você.</p>
+            </div>
         </section>
 
-<section class="saiba-mais" id="saiba-mais">
-    <div class="saiba-mais__container reveal">
+        <!-- ============================
+             COMO SUA ARTE É CRIADA
+        ============================= -->
+        <section class="como-criada geo-bg" id="como-criada">
+            <div class="como-criada__inner reveal">
+                <span class="como-criada__titulo">Como Sua Arte É Criada</span>
+                <div class="como-criada__texto">
+                    <p>Todos os trabalhos são elaborados e criados junto com você, no dia do nosso agendamento. Faço questão desse processo presencial para que eu possa te ouvir e entender exatamente o que você deseja. Durante a criação da arte, converso com você para captar sua essência e seus sentimentos. Assim, consigo imprimir a sua identidade na obra, unindo-a ao meu estilo artístico exclusivo de alto padrão.</p>
+                </div>
+            </div>
+        </section>
 
-        <div class="saiba-mais__intro">
-            <span class="section-label">Saiba Mais</span>
-            <h2>Uma Experiência Autoral</h2>
-            <p>
-                Do primeiro conceito ao traço final, cada detalhe é pensado
-                para transformar anatomia, símbolo e intenção em uma arte única.
-            </p>
+        <!-- ============================
+             ATENDIMENTO PRIVADO
+        ============================= -->
+        <section class="atendimento geo-bg" id="atendimento">
+            <div class="atendimento__inner">
+                <div class="reveal">
+                    <span class="atendimento__tag">Atendimento</span>
+                    <h2 class="atendimento__titulo">PRIVADO E EXCLUSIVO</h2>
+                </div>
+                <div class="atendimento__box reveal">
+                    <p>Para iniciarmos o seu orçamento, peço que me envie a sua ideia. Se você tiver imagens de referência, pode me mandar também, elas são ótimas para eu entender o que você realmente busca.</p>
+                    <p>Apenas um lembrete importante: eu <strong>não faço cópias de outros artistas</strong> e <strong>nem releituras dos meus próprios trabalhos</strong>; cada arte é única.</p>
+                    <p>Caso não tenha imagens de referência, não tem problema! Você pode me mandar um áudio ou texto explicando o seu desejo. Para finalizar, preciso que me envie também o tamanho aproximado da tatuagem (em centímetros) e uma foto ou vídeo do local do corpo que pretende tatuar.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================
+             UMA EXPERIÊNCIA AUTORAL
+        ============================= -->
+        <section class="experiencia geo-bg" id="experiencia">
+            <div class="experiencia__inner">
+                <div class="experiencia__header reveal">
+                    <span class="section-label">Meu Compromisso</span>
+                    <h2 class="experiencia__header h2" style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,46px);font-weight:300;color:#fff;">Uma Experiência Autoral</h2>
+                </div>
+                <div class="experiencia__box reveal">
+                    <p>O fato de eu atender apenas uma pessoa por dia é a garantia de que darei o meu máximo em cada etapa, desde a criação do projeto até a realização da arte. Esse formato exclusivo me permite entregar a máxima qualidade, com excelência e cuidado total durante toda a sua sessão.</p>
+                    <p>Meu atendimento é realizado em um estúdio privado, climatizado e extremamente limpo. Seguimos rigorosamente todas as normas de biossegurança, utilizando materiais descartáveis, tintas e acessórios de última geração e com a melhor qualidade do mercado atual.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================
+             SOBRE — LEONEL PEDRO
+        ============================= -->
+        <section class="sobre-leonel geo-bg" id="sobre">
+            <div class="sobre-leonel__inner">
+                <div class="reveal">
+                    <h2 class="sobre-leonel__nome">Leonel<br>Pedro</h2>
+                    <p class="sobre-leonel__cargo">Especialista em<br>Geometria Sagrada<br>& Realismo</p>
+                    <div class="sobre-leonel__linha"></div>
+                </div>
+                <div class="sobre-leonel__bio reveal">
+                    <p>Muito prazer, me chamo Leonel Pedro. Sou um artista especializado em Geometria Sagrada, Realismo e outros estilos como colorido e fine line. Premiado em Brasília e na Tattoo Week, uma das maiores convenções do mundo.</p>
+                    <p>Sou referência no que faço e um profissional de alta exigência, focado em proporcionar uma experiência única para você. Meu compromisso é respeitar a sua pele e te ouvir com atenção para entregar uma obra que carregue a sua verdadeira identidade.</p>
+                    <p>Não crio artes comerciais e não realizo trabalhos rápidos que comprometam a qualidade. Valorizo o meu tempo e, acima de tudo, o tempo de cada cliente. Dedico o meu melhor a cada detalhe. Por isso, recuso cópias e releituras dos meus próprios trabalhos: cada arte é pensada com calma e exclusividade para cada pessoa que senta na minha cadeira. E você será a próxima.</p>
+                </div>
+            </div>
+        </section>
+
+
+<!--
+    SEÇÃO DEPOIMENTOS
+    ==================
+    Cole este bloco no index.html
+    ENTRE a sessão #sobre (Leonel Pedro) e a sessão #localizacao.
+
+    Adicionar também no <link> de CSS, junto com os outros, antes de </head>:
+    <link href="./css/depoimentos.css" rel="stylesheet">
+
+    E adicionar no menu de navegação (navbar):
+    <li><a href="#depoimentos">Depoimentos</a></li>
+-->
+
+<!-- SEÇÃO DEPOIMENTOS -->
+<section class="depoimentos" id="depoimentos">
+
+    <div class="depoimentos__inner">
+
+        <div class="section-header reveal">
+            <span class="section-label">O que dizem os clientes</span>
+            <h2 class="section-title">Depoimentos</h2>
         </div>
 
-        <div class="saiba-mais__grid">
-            <article class="info-card active" data-info="01">
-                <span>01</span>
-                <h3>Atendimento Personalizado</h3>
-                <p>Conversa inicial para entender sua ideia, referências, significado e estilo.</p>
-            </article>
+        <!-- Nota Google -->
+        <div class="dep-google-header reveal">
 
-            <article class="info-card" data-info="02">
-                <span>02</span>
-                <h3>Projeto Exclusivo</h3>
-                <p>Criação autoral pensada para encaixe anatômico, simetria e composição.</p>
-            </article>
+            <span class="dep-nota">5,0</span>
 
-            <article class="info-card" data-info="03">
-                <span>03</span>
-                <h3>Biossegurança</h3>
-                <p>Procedimento com materiais descartáveis, ambiente preparado e rigor técnico.</p>
-            </article>
+            <div class="dep-estrelas-col">
+                <div class="dep-estrelas">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <span class="dep-qtd">9 avaliações · Google</span>
+            </div>
+
+            <div class="dep-google-badge">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+                Avaliação no Google
+            </div>
+
+        </div>
+
+        <!-- Cards -->
+        <div class="dep-grid">
+
+            <!-- Card 1 — Felipe Couto (real) -->
+            <div class="dep-card reveal">
+                <div class="dep-card__top">
+                    <div class="dep-avatar">F</div>
+                    <div class="dep-card__info">
+                        <h4>Felipe Couto</h4>
+                        <span>2 meses atrás · Google</span>
+                    </div>
+                </div>
+                <div class="dep-card__stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <span class="dep-aspas">"</span>
+                <p class="dep-card__texto">
+                    Além de um talento fora do comum, é um profissional que realmente
+                    vive o que faz. A dedicação é visível em cada etapa — da criação
+                    da ideia até o resultado final — sempre buscando entregar algo
+                    único, autêntico e com máxima qualidade.
+                </p>
+            </div>
+
+            <!-- Card 2 — Felipe Alvim (real) -->
+            <div class="dep-card reveal">
+                <div class="dep-card__top">
+                    <div class="dep-avatar">N</div>
+                    <div class="dep-card__info">
+                        <h4>Nutricionista Felipe Alvim</h4>
+                        <span>3 meses atrás · Google</span>
+                    </div>
+                </div>
+                <div class="dep-card__stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <span class="dep-aspas">"</span>
+                <p class="dep-card__texto">
+                    O trabalho do Leonel fala por si. Tive uma experiência incrível
+                    na minha primeira tatuagem. Super atencioso, detalhista e
+                    realmente preocupado em entregar o melhor. A arte superou todas
+                    as minhas expectativas.
+                </p>
+            </div>
+
+            <!--
+                Cards 3 em diante: substituir pelo texto real dos outros
+                7 reviews do Google quando você tiver acesso a eles.
+                Basta duplicar o bloco .dep-card acima e trocar
+                o conteúdo de .dep-avatar, h4, span e .dep-card__texto.
+            -->
+
+        </div>
+
+        <!-- Link Google -->
+        <div class="dep-link-google reveal">
+            <a href="https://www.google.com/search?q=leonel+pedro+tattoo+aguas+claras#lrd=0x935a33febf7ce2eb:0x94cddbc306c99c30,1"
+               target="_blank" rel="noopener">
+                <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+                Ver todas as avaliações no Google
+            </a>
         </div>
 
     </div>
+
 </section>
 
 
-<section class="localizacao" id="localizacao">
-   <div class="localizacao__info">
-    <h3>Leonel Tattoo Ink</h3>
-
-    <p><strong>Região:</strong> Águas Claras — Brasília/DF</p>
-    <p><strong>Atendimento:</strong> exclusivo com horário marcado.</p>
-    <p><strong>Instagram:</strong> <a href="https://www.instagram.com/leoneltattooink/" target="_blank">@leoneltattooink</a></p>
-    <p><strong>WhatsApp:</strong> número oficial após confirmação do cliente.</p>
-
-    <p>
-        O endereço completo é enviado após o primeiro contato,
-        garantindo privacidade, organização e atendimento personalizado.
-    </p>
-</div>
-        <div class="localizacao__mapa">
-            <iframe
-                src="https://www.google.com/maps?q=%C3%81guas%20Claras%20Bras%C3%ADlia%20DF&output=embed"
-                loading="lazy"
-                allowfullscreen>
-            </iframe>
-        </div>
-    </div>
-</section>
-        
-<footer class="footer">
-    <div class="footer__brand">
-        <h2>LEONEL</h2>
-        <p>Geometria Sagrada & Realismo</p>
-    </div>
-
-    <div class="footer__links">
-        <a href="#hero">Início</a>
-        <a href="#tatuagens">Portfólio</a>
-        <a href="#reserva">Reserva</a>
-        <a href="#localizacao">Localização</a>
-        <a href="#lgpd">LGPD</a>
-    </div>
-
-    <div class="footer__lgpd" id="lgpd">
-        <p>
-            Os dados enviados neste site são utilizados apenas para retorno de contato,
-            orçamento e agendamento, conforme a Lei Geral de Proteção de Dados — LGPD.
-        </p>
-    </div>
-
-    <p class="footer__copy">
-        © 2026 Leonel Tattoo Ink. Todos os direitos reservados.
-    </p>
-</footer>
 
 
+
+
+
+        <!-- ============================
+             LOCALIZAÇÃO
+        ============================= -->
+        <section class="localizacao geo-bg" id="localizacao">
+            <div class="section-header reveal">
+                <span class="section-label">Onde Estamos</span>
+                <h2 class="section-title">Localização</h2>
+            </div>
+            <div class="localizacao__inner reveal">
+                <div class="localizacao__info">
+                    <h3>Leonel Tattoo Ink</h3>
+                    <p><strong>Região:</strong> Le Quartier — Águas Claras, Brasília/DF</p>
+                    <p><strong>Referência:</strong> Ao lado da Estação de Metrô Águas Claras.</p>
+                    <p><strong>Atendimento:</strong> Exclusivo com horário marcado.</p>
+                    <p><strong>Instagram:</strong> <a href="https://www.instagram.com/leoneltattooink/" target="_blank">@leoneltattooink</a></p>
+                    <p><strong>WhatsApp:</strong> <a href="https://wa.me/5561982239427">(61) 98223-9427</a></p>
+                    <p style="margin-top:18px;">O endereço completo é enviado após o primeiro contato, garantindo privacidade, organização e atendimento personalizado.</p>
+                </div>
+                <div class="localizacao__mapa">
+                    <iframe
+                        src="https://www.google.com/maps?q=Le+Quartier+%C3%81guas+Claras+Bras%C3%ADlia+DF&output=embed"
+                        loading="lazy"
+                        allowfullscreen
+                        title="Mapa Leonel Tattoo Ink">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================
+             RESERVA
+        ============================= -->
+        <section class="reserva geo-bg" id="reserva">
+            <div class="reserva__inner reveal">
+                <span class="section-label">Atendimento Exclusivo</span>
+                <h3>Arte autoral desenvolvida exclusivamente para você.</h3>
+                <p>Cada projeto é pensado individualmente para respeitar anatomia, conceito e identidade.</p>
+                <button class="btn-reserva" onclick="abrirModal()">Solicitar Orçamento</button>
+            </div>
+        </section>
 
     </main>
 
-    <!-- MODAL -->
-    <div class="modal-orcamento" id="modalOrcamento">
-
-        <div class="modal-orcamento__content">
-
-            <button
-                class="modal-orcamento__close"
-                id="btnFecharModal">
-
-                &times;
-
-            </button>
-
-            <h3>
-                Desenvolva Seu Projeto
-            </h3>
-
-            <p>
-                Preencha as informações abaixo
-                para iniciar seu atendimento.
-            </p>
-
-            <form
-                id="formOrcamento"
-                class="modal-form">
-
-                <div class="form-group">
-
-                    <input
-                        type="text"
-                        placeholder="Seu nome"
-                        required>
-
-                </div>
-
-                <div class="form-group">
-
-                    <input
-                        type="tel"
-                        placeholder="WhatsApp"
-                        required>
-
-                </div>
-
-                <div class="form-group">
-
-                    <select required>
-
-                        <option value="">
-                            Estilo desejado
-                        </option>
-
-                        <option>
-                            Geometria Sagrada
-                        </option>
-
-                        <option>
-                            Realismo Blackwork
-                        </option>
-
-                        <option>
-                            Fechamento Completo
-                        </option>
-
-                    </select>
-
-                </div>
-
-                <div class="form-group">
-
-                    <textarea
-                        rows="5"
-                        placeholder="Descreva sua ideia..."
-                        required></textarea>
-
-                </div>
-
-                <button
-                    type="submit"
-                    class="btn-enviar-orcamento">
-
-                    Enviar Solicitação
-
-                </button>
-
-            </form>
-
+    <!-- ============================
+         FOOTER
+    ============================= -->
+    <footer class="footer">
+        <div class="footer__brand">
+            <h2>LEONEL</h2>
+            <p>Geometria Sagrada & Realismo</p>
         </div>
+        <div class="footer__links">
+            <a href="#hero">Início</a>
+            <a href="#portfolio">Portfólio</a>
+            <a href="#sobre">Sobre</a>
+            <a href="#reserva">Reserva</a>
+            <a href="#localizacao">Localização</a>
+            <a href="#lgpd">LGPD</a>
+        </div>
+        <div class="footer__lgpd" id="lgpd">
+            <p>Os dados enviados neste site são utilizados apenas para retorno de contato, orçamento e agendamento, conforme a Lei Geral de Proteção de Dados — LGPD.</p>
+        </div>
+        <p class="footer__copy">© 2026 Leonel Tattoo Ink. Todos os direitos reservados.</p>
+    </footer>
 
+    <!-- ============================
+         MODAL ORÇAMENTO
+    ============================= -->
+    <div class="modal-orcamento" id="modalOrcamento">
+        <div class="modal-orcamento__content">
+            <button class="modal-orcamento__close" id="btnFecharModal">&times;</button>
+            <h3>Desenvolva Seu Projeto</h3>
+            <p>Preencha as informações abaixo para iniciar seu atendimento.</p>
+            <form class="modal-form" id="formOrcamento">
+                <div class="form-group">
+                    <input type="text" placeholder="Seu nome" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" placeholder="WhatsApp" required>
+                </div>
+                <div class="form-group">
+                    <select required>
+                        <option value="">Estilo desejado</option>
+                        <option>Geometria Sagrada</option>
+                        <option>Realismo Blackwork</option>
+                        <option>Colorido</option>
+                        <option>Fine Line</option>
+                        <option>Fechamento Completo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea rows="4" placeholder="Descreva sua ideia, tamanho aproximado e local do corpo..." required></textarea>
+                </div>
+                <button type="submit" class="btn-enviar">Enviar Solicitação</button>
+            </form>
+        </div>
     </div>
 
-    <!-- BOTÃO FLUTUANTE -->
-    <button
-        class="btn-agendar-flutuante"
-        id="btnFlutuanteAgendar">
-
+    <!-- ============================
+         BOTÃO FLUTUANTE
+    ============================= -->
+    <a class="btn-flutuante" href="https://wa.me/5561982239427" target="_blank">
         <i class="fab fa-whatsapp"></i>
+        <span>Solicitar Orçamento</span>
+    </a>
 
-        <span>
-            Solicitar Orçamento
-        </span>
+    <!-- ============================
+         SCRIPTS
+    ============================= -->
+    <script>
+        /* --- Navbar toggle mobile --- */
+        const navToggle = document.getElementById('navbarToggle');
+        const navMenu   = document.getElementById('navbarMenu');
+        navToggle.addEventListener('click', () => navMenu.classList.toggle('open'));
+        document.querySelectorAll('.navbar__menu a').forEach(a =>
+            a.addEventListener('click', () => navMenu.classList.remove('open'))
+        );
 
-    </button>
+        /* --- Navbar scroll --- */
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 60);
+        });
 
-    <!-- SCRIPTS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+        /* --- Reveal on scroll --- */
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+        }, { threshold: 0.12 });
+        reveals.forEach(r => observer.observe(r));
 
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
+        /* --- Modal --- */
+        function abrirModal() {
+            document.getElementById('modalOrcamento').classList.add('open');
+        }
+        document.getElementById('btnFecharModal').addEventListener('click', () =>
+            document.getElementById('modalOrcamento').classList.remove('open')
+        );
+        document.getElementById('modalOrcamento').addEventListener('click', function(e) {
+            if (e.target === this) this.classList.remove('open');
+        });
+        document.getElementById('formOrcamento').addEventListener('submit', function(e) {
+            e.preventDefault();
+            this.innerHTML = '<p style="color:var(--gold);font-size:16px;text-align:center;padding:20px 0;">✓ Solicitação enviada! Entraremos em contato em breve.</p>';
+        });
 
-    <script src="./js/home.js"></script>
-<script src="./js/lousa.js"></script>
+        /* --- Carrossel --- */
+        function scrollCarrossel(trackId, dir) {
+            const track = document.getElementById(trackId);
+            const card  = track.querySelector('.carrossel-card');
+            const step  = card ? card.offsetWidth + 18 : 340;
+            track.scrollBy({ left: dir * step, behavior: 'smooth' });
+        }
+    </script>
 
 </body>
 </html>
