@@ -133,11 +133,22 @@
         /* ========================================
            FUNDO GEOMÉTRICO GLOBAL
         ======================================== */
-        .geo-bg {
-            position: relative;
-            background: #050505 !important;
-            overflow: hidden;
-        }
+      .geo-bg {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background-color: #050505;
+    .secoes-internas {
+    position: relative;
+}
+
+.secoes-internas > section {
+    position: relative;
+    z-index: 2;
+}
+}
+
+
        .geo-bg::before {
     content: "";
     position: absolute;
@@ -146,44 +157,49 @@
     background-image: url("../images/flor-da-vida.png");
     background-repeat: repeat;
     background-size: 280px;
+    background-attachment: fixed;
 
     /*
       A imagem original é branca.
       O invert transforma o branco em preto
       e deixa a geometria em tom dourado discreto.
     */
-    filter:
-        invert(1)
-        sepia(1)
-        saturate(2.4)
-        hue-rotate(350deg)
-        brightness(0.75)
-        contrast(1.2);
+    filter: grayscale(1) brightness(0.85) contrast(1.35);
 
-    opacity: 0.18;
+opacity: 0.32;
 
-    animation: geoMove 80s linear infinite;
+    animation: none;
     z-index: 0;
     pointer-events: none;
 }
-        }
+        
         .geo-bg::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(229,196,117,.18), rgba(0,0,0,.25) 35%, rgba(0,0,0,.6) 100%);
-            z-index: 1;
-            pointer-events: none;
-        }
-        .geo-bg > * { position: relative; z-index: 2; }
+    content: "";
+    position: absolute;
+    inset: 0;
 
-        @keyframes geoMove {
-            from { background-position: 0 0; }
-to   { background-position: 280px 280px; }        }
-        @keyframes geoPulse {
-            0%, 100% { opacity: 0.82; }
-            50%       { opacity: 1; }
-        }
+   background: rgba(5, 5, 5, 0.62);
+
+    z-index: 1;
+    pointer-events: none;
+}
+
+
+        .geo-bg > * {
+    position: relative;
+    z-index: 2;
+}
+
+
+     @keyframes geoMove {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 240px 240px;
+    }
+}
 
         /* ========================================
            SECTION HEADERS
@@ -211,109 +227,289 @@ to   { background-position: 280px 280px; }        }
         /* ========================================
            HERO
         ======================================== */
-        .hero {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            min-height: 600px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          background-color: #050505;
-background-image: url("../images/leonel.PNG");
-background-size: contain;
-background-position: center center;
-background-repeat: no-repeat;
-        }
+   .hero {
+    position: relative;
+    width: 100%;
+    min-height: 920px;
+    height: 100vh;
+    overflow: hidden;
+
+    background: #050505;
+}
+
+/* Fundo ampliado e desfocado:
+   preenche a tela sem criar faixas pretas vazias */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-image: url("../images/leonel.PNG");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    filter: blur(26px) brightness(0.22);
+    transform: scale(1.08);
+
+    z-index: 0;
+}
+
+/* Imagem original inteira e nítida */
+.hero::after {
+    content: "";
+    position: absolute;
+
+    left: 50%;
+    top: 190px;
+    transform: translateX(-50%);
+
+    width: min(1180px, 94vw);
+    height: 520px;
+
+    background-image: url("../images/leonel.PNG");
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    z-index: 1;
+    pointer-events: none;
+}
         .hero__overlay {
-            position: absolute;
-            inset: 0;
-            z-index: 1;
-            background: linear-gradient(to bottom, rgba(0,0,0,.30) 0%, rgba(0,0,0,.12) 35%, rgba(0,0,0,.68) 100%);
-        }
-        .hero__content {
-            position: relative;
-            z-index: 3;
-            width: 100%;
-            max-width: 860px;
-            padding: 0 24px;
-            text-align: center;
-            margin-top: 80px;
-        }
-        .hero__title {
-            margin-bottom: 22px;
-            color: #fff;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(38px, 7.5vw, 92px);
-            font-weight: 300;
-            line-height: 1;
-            letter-spacing: -1px;
-            text-shadow: 0 10px 40px rgba(0,0,0,.7);
-        }
-        .hero__title em {
-            display: block;
-            color: var(--gold);
-            font-style: normal;
-        }
-        .hero__sub {
-            max-width: 540px;
-            margin: 0 auto 0;
-            color: rgba(255,255,255,.88);
-            font-size: clamp(14px, 2.2vw, 17px);
-            line-height: 1.75;
-            text-shadow: 0 4px 20px rgba(0,0,0,.8);
-        }
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,.70) 0%,
+        rgba(0,0,0,.28) 28%,
+        rgba(0,0,0,.10) 55%,
+        rgba(0,0,0,.72) 100%
+    );
+}
+       .hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,.70) 0%,
+        rgba(0,0,0,.28) 28%,
+        rgba(0,0,0,.10) 55%,
+        rgba(0,0,0,.72) 100%
+    );
+}
+.hero__content {
+    position: absolute;
+    top: 82px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: min(1100px, 92vw);
+    padding: 0 24px;
+
+    text-align: center;
+    z-index: 3;
+}
+
+
+
+       .hero__title {
+    margin-bottom: 16px;
+    color: #fff;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 6vw, 88px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -1px;
+    text-shadow: 0 10px 40px rgba(0,0,0,.7);
+}
+.hero__title em {
+    display: block;
+    color: var(--gold);
+    font-style: italic;
+}
+
+
+.hero__eyebrow {
+    display: inline-block;
+
+    color: var(--gold);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.hero__title-line {
+    display: block;
+
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+.hero__welcome {
+    position: absolute;
+    left: 50%;
+    bottom: 156px;
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+
+    width: min(620px, 86vw);
+
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 15px;
+    letter-spacing: 0.4px;
+    text-align: center;
+
+    opacity: 0;
+    z-index: 4;
+}
+
+.hero__welcome p {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.hero__welcome-line {
+    width: 42px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.62;
+}
+
+
+
+
+
+
+
+
+       .hero__sub {
+    max-width: 620px;
+    margin: 0 auto;
+    color: rgba(255,255,255,.90);
+    font-size: clamp(15px, 2vw, 20px);
+    line-height: 1.6;
+    text-shadow: 0 4px 20px rgba(0,0,0,.8);
+}
 
         /* Sociais — lateral esquerda */
         .hero__socials {
-            position: absolute;
-            top: 50%;
-            left: 36px;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-            z-index: 10;
-        }
-        .hero__socials::before {
-            content: "";
-            width: 1px;
-            height: 56px;
-            margin-bottom: 4px;
-            background: linear-gradient(to bottom, transparent, rgba(213,173,85,.95));
-        }
+    position: absolute;
+    left: 50%;
+    bottom: 80px;
+    transform: translateX(-50%);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+
+    z-index: 10;
+}.hero__socials::before {
+    display: none;
+}
+       
+        
         .hero__socials a {
-            width: 50px; height: 50px;
-            display: flex; align-items: center; justify-content: center;
-            border: 1px solid rgba(255,255,255,.38);
-            border-radius: 50%;
-            color: #fff;
-            font-size: 20px;
-            text-decoration: none;
-            background: rgba(0,0,0,.38);
-            backdrop-filter: blur(8px);
-            transition: transform .25s, color .25s, background .25s, border-color .25s, box-shadow .25s;
-        }
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+
+    color: #ffffff;
+    font-size: 21px;
+    text-decoration: none;
+
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+
+    transition:
+        transform 0.25s ease,
+        color 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+        
+        
         .hero__socials a:hover {
-            color: #111;
-            background: var(--gold);
-            border-color: var(--gold);
-            transform: translateX(10px) scale(1.12);
-            box-shadow: 0 0 0 6px rgba(213,173,85,.18), 0 12px 28px rgba(0,0,0,.45);
-        }
+    color: #111111;
+    background: #d5ad55;
+    border-color: #d5ad55;
 
-        @media (max-width: 768px) {
-            .hero__socials { left: 14px; gap: 10px; }
-            .hero__socials::before { height: 36px; }
-            .hero__socials a { width: 40px; height: 40px; font-size: 17px; }
-        }
+    transform: translateY(-5px) scale(1.08);
 
+    box-shadow:
+        0 0 0 6px rgba(213, 173, 85, 0.18),
+        0 12px 28px rgba(0, 0, 0, 0.45);
+}
+
+       /* ========================================
+   HERO — AJUSTE PARA CELULAR
+======================================== */
+@media (max-width: 768px) {
+    .hero {
+        min-height: 860px;
+        height: auto;
+        padding-bottom: 140px;
+    }
+
+    .hero::after {
+        top: 250px;
+        width: 94vw;
+        height: 340px;
+    }
+
+    .hero__content {
+        top: 110px;
+        width: 94vw;
+        padding: 0 18px;
+        top: 92px;
+    }
+
+    .hero__title {
+        font-size: clamp(34px, 10vw, 52px);
+        line-height: 1;
+        margin-bottom: 14px;
+    }
+
+    .hero__sub {
+        max-width: 300px;
+        font-size: 15px;
+        line-height: 1.45;
+    }
+
+    .hero__socials {
+        bottom: 68px;
+        gap: 12px;
+        
+    }
+
+    .hero__socials a {
+        width: 46px;
+        height: 46px;
+        font-size: 18px;
+        
+    }
+}
         /* ========================================
            PORTFÓLIO — CARROSSEL DUPLO
         ======================================== */
-        .portfolio { padding: 100px 0; }
+        .portfolio { padding: 80px 0; }
 
         /* --- Carrossel --- */
         .carrossel-bloco { margin-bottom: 70px; }
@@ -483,7 +679,7 @@ background-repeat: no-repeat;
         /* ========================================
            COMO SUA ARTE É CRIADA
         ======================================== */
-        .como-criada { padding: 100px 0; }
+        .como-criada { padding: 80px 0; }
         .como-criada__inner {
             max-width: 780px;
             margin: 0 auto;
@@ -511,7 +707,7 @@ background-repeat: no-repeat;
         /* ========================================
            ATENDIMENTO PRIVADO E EXCLUSIVO
         ======================================== */
-        .atendimento { padding: 100px 0; }
+        .atendimento { padding: 80px 0; }
         .atendimento__inner {
             max-width: 820px;
             margin: 0 auto;
@@ -557,7 +753,7 @@ background-repeat: no-repeat;
         /* ========================================
            UMA EXPERIÊNCIA AUTORAL
         ======================================== */
-        .experiencia { padding: 100px 0; }
+        .experiencia { padding: 80px 0; }
         .experiencia__inner {
             max-width: 820px;
             margin: 0 auto;
@@ -594,7 +790,7 @@ background-repeat: no-repeat;
         /* ========================================
            SOBRE — LEONEL PEDRO
         ======================================== */
-        .sobre-leonel { padding: 100px 0; }
+        .sobre-leonel { padding: 80px 0; }
         .sobre-leonel__inner {
             max-width: 900px;
             margin: 0 auto;
@@ -644,7 +840,7 @@ background-repeat: no-repeat;
         /* ========================================
            LOCALIZAÇÃO
         ======================================== */
-        .localizacao { padding: 100px 0; }
+        .localizacao { padding: 80px 0; }
         .localizacao__inner {
             max-width: 1000px;
             margin: 0 auto;
@@ -697,7 +893,7 @@ background-repeat: no-repeat;
         /* ========================================
            RESERVA
         ======================================== */
-        .reserva { padding: 120px 0; }
+        .reserva { padding: 80px 0; }
         .reserva__inner {
             max-width: 680px;
             margin: 0 auto;
@@ -904,7 +1100,20 @@ background-repeat: no-repeat;
             transform: translateY(-4px);
             box-shadow: 0 14px 36px rgba(229,196,117,.5);
         }
-        @media (max-width: 768px) {
-            .btn-flutuante { right: 16px; bottom: 18px; padding: 13px 20px; font-size: 10px; }
-        }
-   
+       @media (max-width: 768px) {
+    .btn-flutuante {
+        right: 16px;
+        bottom: 18px;
+
+        padding: 12px 18px;
+
+        font-size: 9px;
+        letter-spacing: 1.5px;
+
+        box-shadow: 0 8px 22px rgba(229, 196, 117, 0.26);
+    }
+
+    .btn-flutuante i {
+        font-size: 16px;
+    }
+}

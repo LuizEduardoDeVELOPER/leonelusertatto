@@ -56,12 +56,21 @@
             <div class="hero__overlay"></div>
 
             <div class="hero__content">
-                <h1 class="hero__title">
-                    Sua pele merece respeito,
-                    <em>sua história merece arte.</em>
-                </h1>
-                <p class="hero__sub">Seja bem-vindo ao meu espaço.</p>
-            </div>
+               <h1 class="hero__title">
+        <span class="hero__title-line">Sua pele merece respeito,</span>
+        <em class="hero__title-line">sua história merece arte.</em>
+    </h1>
+</div>
+
+<div class="hero__welcome">
+    <span class="hero__welcome-line"></span>
+
+    <p>
+        Seja bem-vindo ao meu espaço.
+    </p>
+
+    <span class="hero__welcome-line"></span>
+</div>
 
             <div class="hero__socials">
                 <a href="https://www.instagram.com/leoneltattooink/" target="_blank" aria-label="Instagram">
@@ -79,8 +88,8 @@
         <!-- ============================
              PORTFÓLIO — CARROSSÉIS
         ============================= -->
-        <section class="portfolio geo-bg" id="portfolio">
-            <div class="section-header reveal">
+<section class="portfolio geo-bg" id="portfolio">
+                <div class="section-header reveal">
                 <span class="section-label">Portfólio</span>
                 <h2 class="section-title">Especialidades</h2>
             </div>
@@ -538,6 +547,66 @@
          SCRIPTS
     ============================= -->
     <script>
+
+
+
+/* --- Entrada elegante da Hero --- */
+window.addEventListener("load", () => {
+    const eyebrow = document.querySelector(".hero__eyebrow");
+    const titleLines = document.querySelectorAll(".hero__title-line");
+    const welcome = document.querySelector(".hero__welcome");
+
+    if (eyebrow) {
+        eyebrow.animate(
+            [
+                { opacity: 0, transform: "translateY(-10px)" },
+                { opacity: 1, transform: "translateY(0)" }
+            ],
+            {
+                duration: 700,
+                easing: "ease-out",
+                fill: "forwards"
+            }
+        );
+    }
+
+    titleLines.forEach((line, index) => {
+        line.animate(
+            [
+                { opacity: 0, transform: "translateY(24px)" },
+                { opacity: 1, transform: "translateY(0)" }
+            ],
+            {
+                duration: 850,
+                delay: 280 + index * 220,
+                easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+                fill: "forwards"
+            }
+        );
+    });
+
+    if (welcome) {
+        welcome.animate(
+            [
+                { opacity: 0, transform: "translateX(-50%) translateY(14px)" },
+                { opacity: 1, transform: "translateX(-50%) translateY(0)" }
+            ],
+            {
+                duration: 700,
+                delay: 920,
+                easing: "ease-out",
+                fill: "forwards"
+            }
+        );
+    }
+});
+
+
+
+
+
+
+
         /* --- Navbar toggle mobile --- */
         const navToggle = document.getElementById('navbarToggle');
         const navMenu   = document.getElementById('navbarMenu');
