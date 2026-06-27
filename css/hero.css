@@ -138,18 +138,34 @@
             background: #050505 !important;
             overflow: hidden;
         }
-        .geo-bg::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image: url('./images/geometria-bg.png');
-            background-size: 520px;
-            background-repeat: repeat;
-            opacity: 0.92;
-            filter: hue-rotate(0deg) saturate(2.2) brightness(1.3) contrast(1.2);
-            animation: geoMove 24s linear infinite, geoPulse 4s ease-in-out infinite;
-            z-index: 0;
-            pointer-events: none;
+       .geo-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-image: url("../images/flor-da-vida.png");
+    background-repeat: repeat;
+    background-size: 280px;
+
+    /*
+      A imagem original é branca.
+      O invert transforma o branco em preto
+      e deixa a geometria em tom dourado discreto.
+    */
+    filter:
+        invert(1)
+        sepia(1)
+        saturate(2.4)
+        hue-rotate(350deg)
+        brightness(0.75)
+        contrast(1.2);
+
+    opacity: 0.18;
+
+    animation: geoMove 80s linear infinite;
+    z-index: 0;
+    pointer-events: none;
+}
         }
         .geo-bg::after {
             content: "";
@@ -163,8 +179,7 @@
 
         @keyframes geoMove {
             from { background-position: 0 0; }
-            to   { background-position: 520px 520px; }
-        }
+to   { background-position: 280px 280px; }        }
         @keyframes geoPulse {
             0%, 100% { opacity: 0.82; }
             50%       { opacity: 1; }
@@ -205,12 +220,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #0a0a0a;
-            background-image: url('./images/leonel.PNG');
-            background-size: contain;
+          background-color: #050505;
+background-image: url("../images/leonel.PNG");
+background-size: contain;
 background-position: center center;
 background-repeat: no-repeat;
-background-color: #050505;
         }
         .hero__overlay {
             position: absolute;
