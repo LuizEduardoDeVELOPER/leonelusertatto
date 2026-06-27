@@ -1,652 +1,69 @@
 /* ========================================
-   RESET & VARIÁVEIS GLOBAIS
+   sobre.css — SEÇÃO SOBRE LEONEL PEDRO
+   CORREÇÃO: removida regra vazia
+   .sobre-leonel__nome-bloco {}
 ======================================== */
 
-:root {
-    --bg-color:        #0a0a0a;
-    --card-bg:         #111111;
-    --border-color:    #222222;
-    --text-primary:    #ffffff;
-    --text-secondary:  #a0a0a0;
-    --text-muted:      #888888;
-    --accent-color:    #e5c475;
+.sobre-leonel {
+    padding: 100px 0;
 }
 
-*, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.sobre-leonel__inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 56px;
+    align-items: center;
 }
 
-html {
-    scroll-behavior: smooth;
+/* .sobre-leonel__nome-bloco — sem regra vazia */
+
+.sobre-leonel__nome {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 300;
+    color: #1a1a1a;
+    line-height: 1;
+    margin-bottom: 12px;
 }
 
-body {
-    background-color: var(--bg-color);
-    color: var(--text-primary);
-    font-family: 'Montserrat', sans-serif;
-    overflow-x: hidden;
-}
-
-/* ========================================
-   SECTIONS
-======================================== */
-
-section {
-    position: relative;
-    padding: 80px 0;
-    overflow: hidden;
-}
-
-/* ========================================
-   SECTION HEADERS
-======================================== */
-
-.section-header {
-    text-align: center;
-    margin-bottom: 60px;
-    padding: 0 20px;
-}
-
-.section-label {
-    display: block;
-    margin-bottom: 10px;
+.sobre-leonel__cargo {
     font-size: 11px;
     letter-spacing: 3px;
     color: var(--accent-color);
     text-transform: uppercase;
+    line-height: 1.6;
 }
 
-.section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(32px, 5vw, 42px);
-    font-weight: 300;
-    color: #fff;
-}
-
-/* ========================================
-   REVEAL ANIMATION
-======================================== */
-
-.reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Garante visibilidade se JS falhar */
-.no-js .reveal {
-    opacity: 1;
-    transform: none;
-}
-
-/* ========================================
-   FUNDO GEOMÉTRICO GLOBAL
-======================================== */
-
-
-.portfolio,
-.sobre,
-.pinturas,
-.loja,
-.lousa-geometrica,
-.reserva,
-.saiba-mais,
-.localizacao,
-.depoimentos {
-    background: #ffffff !important;
-}
-
-/* Camada 1: imagem da Flor da Vida */
-.portfolio::before,
-.sobre::before,
-.pinturas::before,
-.loja::before,
-.lousa-geometrica::before,
-.reserva::before,
-.saiba-mais::before,
-.localizacao::before,
-.depoimentos::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    /*  Troque pelo caminho real da imagem no seu projeto.
-       A imagem que o Leonel mandou (preto sobre branco) deve
-       ficar em: ./images/flor-da-vida.png
-       Se o nome for diferente, ajuste aqui. */
-    background-image: url('../images/flor-da-vida.png');
-    background-size: 320px;          /* tamanho do tile */
-    background-repeat: repeat;
-    background-attachment: fixed;    /* ← FIXO, não se move */
-
-    opacity: 0.08;                   /* sutilíssimo — só aparece que tem */
-
-    z-index: 0;
-    pointer-events: none;
-}
-
-/* Camada 2: overlay quase transparente pra não competir com textos */
-.portfolio::after,
-.sobre::after,
-.pinturas::after,
-.loja::after,
-.lousa-geometrica::after,
-.reserva::after,
-.saiba-mais::after,
-.localizacao::after,
-.depoimentos::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.72); /* branquinho por cima */
-    z-index: 1;
-    pointer-events: none;
-}
-
-/* Conteúdo fica sempre acima das camadas */
-.portfolio > *,
-.sobre > *,
-.pinturas > *,
-.loja > *,
-.lousa-geometrica > *,
-.reserva > *,
-.saiba-mais > *,
-.localizacao > *,
-.depoimentos > * {
-    position: relative;
-    z-index: 2;
-}
-
-/* Remove animações antigas — já não são necessárias */
-/* (apagar ou comentar @keyframes geoMove e geoPulse no global.css) */
-
-/* ========================================
-   MODAL ORÇAMENTO
-======================================== */
-
-.modal-orcamento {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.80);
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: .4s ease;
-    z-index: 99999;
-    padding: 20px;
-}
-
-.modal-orcamento.open {
-    opacity: 1;
-    visibility: visible;
-}
-
-.modal-orcamento__content {
-    width: 100%;
-    max-width: 620px;
-    background: #111;
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 20px;
-    padding: 40px 36px;
-    position: relative;
-    transform: translateY(40px);
-    transition: .4s ease;
-}
-
-.modal-orcamento.open .modal-orcamento__content {
-    transform: translateY(0);
-}
-
-.modal-orcamento__content h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 300;
-    color: #fff;
-    margin-bottom: 10px;
-}
-
-.modal-orcamento__content p {
-    color: var(--text-secondary);
-    font-size: 14px;
-    margin-bottom: 28px;
-}
-
-.modal-orcamento__close {
-    position: absolute;
-    top: 18px;
-    right: 20px;
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 2rem;
-    cursor: pointer;
-    line-height: 1;
-    opacity: .6;
-    transition: opacity .2s;
-}
-
-.modal-orcamento__close:hover {
-    opacity: 1;
-}
-
-.modal-form .form-group {
-    margin-bottom: 16px;
-}
-
-.modal-form input,
-.modal-form select,
-.modal-form textarea {
-    width: 100%;
-    background: #1a1a1a;
-    border: 1px solid rgba(255,255,255,.1);
-    border-radius: 8px;
-    padding: 14px 16px;
-    color: #fff;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 13px;
-    outline: none;
-    transition: border-color .2s;
-}
-
-.modal-form input:focus,
-.modal-form select:focus,
-.modal-form textarea:focus {
-    border-color: var(--accent-color);
-}
-
-.modal-form select option {
-    background: #1a1a1a;
-}
-
-.btn-enviar-orcamento {
-    width: 100%;
-    padding: 16px;
+.sobre-leonel__linha {
+    width: 40px;
+    height: 1px;
     background: var(--accent-color);
-    color: #000;
-    border: none;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: .3s ease;
+    margin: 22px 0;
+    opacity: .5;
 }
 
-.btn-enviar-orcamento:hover {
-    background: #f0d080;
-    transform: translateY(-2px);
+.sobre-leonel__bio {
+    color: rgba(0,0,0,.78);
+    font-size: 15px;
+    line-height: 2;
 }
 
-/* ========================================
-   BOTÃO FLUTUANTE WHATSAPP
-======================================== */
-
-.btn-agendar-flutuante {
-    position: fixed;
-    bottom: 28px;
-    right: 28px;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px 28px;
-    background: var(--accent-color);
-    color: #000;
-    border: none;
-    border-radius: 50px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    cursor: pointer;
-    box-shadow: 0 8px 28px rgba(229,196,117,.4);
-    transition: .3s ease;
+.sobre-leonel__bio p {
+    margin-bottom: 14px;
 }
 
-.btn-agendar-flutuante i {
-    font-size: 18px;
+.sobre-leonel__bio p:last-child {
+    margin-bottom: 0;
 }
-
-.btn-agendar-flutuante:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 14px 36px rgba(229,196,117,.5);
-}
-
-/* ========================================
-   FOOTER
-======================================== */
-
-.footer {
-    background: #050505;
-    border-top: 1px solid rgba(229,196,117,.18);
-    padding: 60px 8%;
-    text-align: center;
-}
-
-.footer__brand h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 32px;
-    letter-spacing: 4px;
-    color: #fff;
-}
-
-.footer__brand p {
-    color: var(--accent-color);
-    font-size: 12px;
-    margin-top: 6px;
-}
-
-.footer__links {
-    display: flex;
-    justify-content: center;
-    gap: 24px;
-    margin: 25px 0;
-    flex-wrap: wrap;
-}
-
-.footer__links a {
-    color: var(--accent-color);
-    text-decoration: none;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: opacity .2s;
-}
-
-.footer__links a:hover {
-    opacity: .7;
-}
-
-.footer__lgpd {
-    max-width: 800px;
-    margin: 0 auto 25px;
-    color: #aaa;
-    font-size: 13px;
-    line-height: 1.7;
-}
-
-.footer__copy {
-    margin-top: 30px;
-    font-size: 12px;
-    color: var(--text-muted);
-}
-
-/* ========================================
-   RESPONSIVO GLOBAL
-======================================== */
 
 @media (max-width: 768px) {
+    .sobre-leonel { padding: 70px 0; }
 
-    section {
-        padding: 60px 0;
-    }
-
-    .section-title {
-        font-size: 32px;
-    }
-
-    .btn-agendar-flutuante {
-        right: 16px;
-        bottom: 20px;
-        padding: 14px 22px;
-        font-size: 11px;
-    }
-
-    .modal-orcamento__content {
-        padding: 30px 22px;
-    }
-
-    body {
-        overflow-x: hidden;
-    }
-}
-
-/* ========================================
-   CORREÇÃO LOUSA MOBILE/DESKTOP
-======================================== */
-
-.lousa-geometrica__container{
-    width: min(1100px, 92%);
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    gap: 36px;
-    align-items: stretch;
-}
-
-.lousa-geometrica__texto{
-    position: relative;
-    z-index: 5;
-    background: rgba(17,17,17,.92);
-    border: 1px solid rgba(229,196,117,.25);
-    padding: 32px;
-}
-
-#lousaCanvas{
-    display: block !important;
-    width: 100% !important;
-    height: 420px !important;
-    min-height: 420px !important;
-
-    position: relative !important;
-    z-index: 5 !important;
-
-    background: rgba(5,5,5,.86) !important;
-    border: 1px solid rgba(229,196,117,.45) !important;
-
-    cursor: crosshair;
-    pointer-events: auto !important;
-}
-
-@media(max-width: 768px){
-
-    .lousa-geometrica{
-        padding: 80px 0;
-    }
-
-    .lousa-geometrica__container{
-        display: grid;
+    .sobre-leonel__inner {
         grid-template-columns: 1fr;
-        gap: 24px;
-        width: 92%;
-    }
-
-    .lousa-geometrica__texto{
-        padding: 24px;
-    }
-
-    #lousaCanvas{
-        width: 100% !important;
-        height: 340px !important;
-        min-height: 340px !important;
-    }
-}
-
-/* ========================================
-   SAIBA MAIS PREMIUM
-======================================== */
-
-.saiba-mais{
-    padding: 120px 0 !important;
-}
-
-.saiba-mais__container{
-    width: min(1180px, 92%) !important;
-    margin: 0 auto !important;
-
-    display: grid !important;
-    grid-template-columns: .9fr 1.4fr !important;
-    gap: 50px !important;
-    align-items: center !important;
-}
-
-.saiba-mais__intro{
-    background: rgba(8,8,8,.78);
-    border: 1px solid rgba(229,196,117,.22);
-    padding: 42px;
-    border-radius: 24px;
-    backdrop-filter: blur(10px);
-}
-
-.saiba-mais__intro h2{
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 58px;
-    font-weight: 300;
-    line-height: 1;
-    margin-bottom: 24px;
-}
-
-.saiba-mais__intro p{
-    color: rgba(255,255,255,.72);
-    font-size: 16px;
-    line-height: 1.8;
-}
-
-.saiba-mais__grid{
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 22px !important;
-}
-
-.info-card{
-    background: rgba(17,17,17,.9);
-    border: 1px solid rgba(229,196,117,.2);
-    border-radius: 22px;
-    padding: 32px 26px;
-    min-height: 280px;
-
-    transition: .35s ease;
-}
-
-.info-card:hover{
-    transform: translateY(-8px);
-    border-color: var(--accent-color);
-    box-shadow: 0 25px 70px rgba(0,0,0,.45);
-}
-
-.info-card span{
-    color: var(--accent-color);
-    letter-spacing: 4px;
-    font-size: 13px;
-}
-
-.info-card h3{
-    font-size: 25px;
-    line-height: 1.1;
-    margin: 24px 0 18px;
-}
-
-.info-card p{
-    color: rgba(255,255,255,.72);
-    line-height: 1.75;
-    font-size: 15px;
-}
-
-/* ========================================
-   LOCALIZAÇÃO PREMIUM
-======================================== */
-
-.localizacao{
-    padding: 120px 0 !important;
-}
-
-.localizacao__container{
-    width: min(1180px, 92%) !important;
-    margin: 0 auto !important;
-
-    display: grid !important;
-    grid-template-columns: .85fr 1.15fr !important;
-    gap: 34px !important;
-    align-items: stretch !important;
-}
-
-.localizacao__info{
-    background: rgba(8,8,8,.82) !important;
-    border: 1px solid rgba(229,196,117,.22) !important;
-    border-radius: 24px;
-    padding: 42px !important;
-    backdrop-filter: blur(10px);
-}
-
-.localizacao__info h3{
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 48px;
-    font-weight: 300;
-    margin-bottom: 26px;
-}
-
-.localizacao__info p{
-    font-size: 16px;
-    line-height: 1.8;
-    color: rgba(255,255,255,.76);
-}
-
-.localizacao__info strong{
-    color: #fff;
-}
-
-.localizacao__info a{
-    color: var(--accent-color);
-    font-weight: 700;
-}
-
-.localizacao__mapa{
-    background: rgba(8,8,8,.82) !important;
-    border: 1px solid rgba(229,196,117,.22) !important;
-    border-radius: 24px;
-    padding: 14px !important;
-    overflow: hidden;
-}
-
-.localizacao__mapa iframe{
-    width: 100%;
-    height: 420px !important;
-    border: 0;
-    border-radius: 18px;
-}
-
-/* MOBILE */
-
-@media(max-width: 768px){
-
-    .saiba-mais__container,
-    .localizacao__container{
-        grid-template-columns: 1fr !important;
-        gap: 26px !important;
-    }
-
-    .saiba-mais__intro,
-    .localizacao__info{
-        padding: 28px !important;
-    }
-
-    .saiba-mais__intro h2,
-    .localizacao__info h3{
-        font-size: 38px;
-    }
-
-    .saiba-mais__grid{
-        grid-template-columns: 1fr !important;
-    }
-
-    .info-card{
-        min-height: auto;
-    }
-
-    .localizacao__mapa iframe{
-        height: 320px !important;
+        gap: 32px;
     }
 }
