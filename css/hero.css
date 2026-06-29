@@ -256,13 +256,32 @@ opacity: 0.32;
 }
 
 /* Imagem original inteira e nítida */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: -30px;
+
+    background-image: url("../images/leonel.PNG");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    filter: blur(12px) brightness(0.38);
+transform: scale(1.04);
+
+opacity: 0.92;
+
+    z-index: 0;
+}
+
+
 .hero::after {
     content: "";
     position: absolute;
 
     left: 50%;
-    top: 190px;
-    transform: translateX(-50%);
+    top: 50%;
+    transform: translate(-50%, -50%);
 
     width: min(1180px, 94vw);
     height: 520px;
@@ -275,30 +294,28 @@ opacity: 0.32;
     z-index: 1;
     pointer-events: none;
 }
-        .hero__overlay {
+
+
+
+
+
+     .hero__overlay {
     position: absolute;
     inset: 0;
     z-index: 2;
+
     background: linear-gradient(
         to bottom,
-        rgba(0,0,0,.70) 0%,
-        rgba(0,0,0,.28) 28%,
-        rgba(0,0,0,.10) 55%,
-        rgba(0,0,0,.72) 100%
+      rgba(0, 0, 0, 0.30) 0%,
+rgba(0, 0, 0, 0.08) 30%,
+rgba(0, 0, 0, 0.12) 62%,
+rgba(0, 0, 0, 0.48) 100%
     );
 }
-       .hero__overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,.70) 0%,
-        rgba(0,0,0,.28) 28%,
-        rgba(0,0,0,.10) 55%,
-        rgba(0,0,0,.72) 100%
-    );
-}
+      
+
+
+
 .hero__content {
     position: absolute;
     top: 82px;

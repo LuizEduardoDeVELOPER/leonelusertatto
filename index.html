@@ -53,6 +53,10 @@
              HERO
         ============================= -->
         <section class="hero" id="hero">
+
+
+
+
             <div class="hero__overlay"></div>
 
             <div class="hero__content">
@@ -356,7 +360,10 @@
         </div>
 
         <!-- Cards -->
-        <div class="dep-grid">
+<div class="dep-carousel">
+    <div class="dep-track" id="track-depoimentos">
+
+
 
             <!-- Card 1 — Felipe Couto (real) -->
             <div class="dep-card reveal">
@@ -404,12 +411,152 @@
                 </p>
             </div>
 
+
+
+<!-- Depoimento: Guilherme Campos -->
+<div class="dep-card reveal">
+    <div class="dep-card__top">
+        <div class="dep-avatar">G</div>
+
+        <div class="dep-card__info">
+            <h4>Guilherme Campos</h4>
+            <span>9 meses atrás · Google</span>
+        </div>
+    </div>
+
+    <div class="dep-card__stars" aria-label="5 estrelas">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+    </div>
+
+    <span class="dep-aspas">"</span>
+
+    <p class="dep-card__texto">
+        Primeiramente, ressaltar que o Leonel foi o tatuador mais profissional que já tive contato.
+        Seus projetos têm uma grandeza, cuidado com o cliente e qualidade em cada detalhe.
+    </p>
+</div>
+
+<!-- Depoimento: Harley Nunes -->
+<div class="dep-card reveal">
+    <div class="dep-card__top">
+        <div class="dep-avatar">H</div>
+
+        <div class="dep-card__info">
+            <h4>Harley Nunes</h4>
+            <span>2 meses atrás · Google</span>
+        </div>
+    </div>
+
+    <div class="dep-card__stars" aria-label="5 estrelas">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+    </div>
+
+    <span class="dep-aspas">"</span>
+
+    <p class="dep-card__texto">
+        Sem palavras pelo trabalho, artes únicas, harmonia nos trampos, total suporte.
+        Pra quem gosta de artes exclusivas está no local certo.
+    </p>
+</div>
+
+<!-- Depoimento: Douglas Santos -->
+<div class="dep-card reveal">
+    <div class="dep-card__top">
+        <div class="dep-avatar">D</div>
+
+        <div class="dep-card__info">
+            <h4>Douglas Santos</h4>
+            <span>9 meses atrás · Google</span>
+        </div>
+    </div>
+
+    <div class="dep-card__stars" aria-label="5 estrelas">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+    </div>
+
+    <span class="dep-aspas">"</span>
+
+    <p class="dep-card__texto">
+        Quando me indicaram o Leonel para realizar minha primeira tatuagem, recebi a recomendação
+        de amigos e não me arrependi de ter feito minha primeira tatuagem com ele.
+    </p>
+</div>
+
+<!-- Depoimento: Ludmyla Botelho -->
+<div class="dep-card reveal">
+    <div class="dep-card__top">
+        <div class="dep-avatar">L</div>
+
+        <div class="dep-card__info">
+            <h4>Ludmyla Botelho</h4>
+            <span>9 meses atrás · Google</span>
+        </div>
+    </div>
+
+    <div class="dep-card__stars" aria-label="5 estrelas">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+    </div>
+
+    <span class="dep-aspas">"</span>
+
+    <p class="dep-card__texto">
+        Um artista completo! Pegou a referência e transformou em algo único,
+        mãos leves e muito atencioso.
+    </p>
+</div>
+
+<!-- Depoimento: BSBSTAY Guilherme -->
+<div class="dep-card reveal">
+    <div class="dep-card__top">
+        <div class="dep-avatar">B</div>
+
+        <div class="dep-card__info">
+            <h4>BSBSTAY Guilherme</h4>
+            <span>1 mês atrás · Google</span>
+        </div>
+    </div>
+
+    <div class="dep-card__stars" aria-label="5 estrelas">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+    </div>
+
+    <span class="dep-aspas">"</span>
+
+    <p class="dep-card__texto">
+        O melhor profissional de Brasília! 👏👏👏
+    </p>
+</div>
+
+
+
+
             <!--
                 Cards 3 em diante: substituir pelo texto real dos outros
                 7 reviews do Google quando você tiver acesso a eles.
                 Basta duplicar o bloco .dep-card acima e trocar
                 o conteúdo de .dep-avatar, h4, span e .dep-card__texto.
             -->
+
 
         </div>
 
@@ -427,7 +574,33 @@
             </a>
         </div>
 
+
+
+
+
     </div>
+
+
+
+    
+<div class="dep-carousel-nav">
+    <button
+        type="button"
+        class="dep-carousel-btn"
+        onclick="scrollDepoimentos(-1)"
+        aria-label="Ver depoimentos anteriores">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <button
+        type="button"
+        class="dep-carousel-btn"
+        onclick="scrollDepoimentos(1)"
+        aria-label="Ver próximos depoimentos">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+</div>
+
 
 </section>
 
@@ -548,7 +721,27 @@
     ============================= -->
     <script>
 
+function scrollDepoimentos(direcao) {
+    const track = document.getElementById("track-depoimentos");
 
+    if (!track) {
+        return;
+    }
+
+    const primeiroCard = track.querySelector(".dep-card");
+
+    if (!primeiroCard) {
+        return;
+    }
+
+    const espacamento = 22;
+    const distancia = primeiroCard.offsetWidth + espacamento;
+
+    track.scrollBy({
+        left: direcao * distancia,
+        behavior: "smooth"
+    });
+}
 
 /* --- Entrada elegante da Hero --- */
 window.addEventListener("load", () => {
