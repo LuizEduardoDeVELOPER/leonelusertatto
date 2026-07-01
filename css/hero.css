@@ -224,170 +224,76 @@ opacity: 0.32;
             color: #fff;
         }
 
-        /* ========================================
-           HERO
-        ======================================== */
-   .hero {
+
+
+/* =========================================================
+   HERO — CAPA PRINCIPAL DO SITE
+   Arquivo único responsável pela primeira sessão.
+========================================================= */
+
+.hero {
     position: relative;
     width: 100%;
-    min-height: 920px;
-    height: 100vh;
+    min-height: 100svh;
+    height: 100svh;
     overflow: hidden;
 
-    background: #050505;
+    background-color: #050505;
+    background-image: url("../images/nova-capa.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
 }
 
-/* Fundo ampliado e desfocado:
-   preenche a tela sem criar faixas pretas vazias */
-.hero::before {
-    content: "";
+/* Desativa imagens antigas e pseudo-elementos da Hero */
+.hero::before,
+.hero::after,
+.hero__bg {
+    content: none !important;
+    display: none !important;
+}
+
+/* Camada discreta apenas para leitura dos elementos inferiores */
+.hero__overlay {
     position: absolute;
     inset: 0;
-
-    background-image: url("../images/leonel.PNG");
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-
-    filter: blur(26px) brightness(0.22);
-    transform: scale(1.08);
-
-    z-index: 0;
-}
-
-/* Imagem original inteira e nítida */
-.hero::before {
-    content: "";
-    position: absolute;
-    inset: -30px;
-
-    background-image: url("../images/leonel.PNG");
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-
-    filter: blur(12px) brightness(0.38);
-transform: scale(1.04);
-
-opacity: 0.92;
-
-    z-index: 0;
-}
-
-
-.hero::after {
-    content: "";
-    position: absolute;
-
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-
-    width: min(1180px, 94vw);
-    height: 520px;
-
-    background-image: url("../images/leonel.PNG");
-    background-size: contain;
-    background-position: center center;
-    background-repeat: no-repeat;
-
     z-index: 1;
-    pointer-events: none;
-}
-
-
-
-
-
-     .hero__overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
 
     background: linear-gradient(
         to bottom,
-      rgba(0, 0, 0, 0.30) 0%,
-rgba(0, 0, 0, 0.08) 30%,
-rgba(0, 0, 0, 0.12) 62%,
-rgba(0, 0, 0, 0.48) 100%
+        rgba(0, 0, 0, 0.02) 0%,
+        rgba(0, 0, 0, 0.02) 55%,
+        rgba(0, 0, 0, 0.20) 75%,
+        rgba(0, 0, 0, 0.76) 100%
     );
 }
-      
 
-
-
+/* Não exibe mais título na capa */
 .hero__content {
-    position: absolute;
-    top: 82px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    width: min(1100px, 92vw);
-    padding: 0 24px;
-
-    text-align: center;
-    z-index: 3;
+    display: none !important;
 }
 
-
-
-       .hero__title {
-    margin-bottom: 16px;
-    color: #fff;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(48px, 6vw, 88px);
-    font-weight: 300;
-    line-height: 0.95;
-    letter-spacing: -1px;
-    text-shadow: 0 10px 40px rgba(0,0,0,.7);
-}
-.hero__title em {
-    display: block;
-    color: var(--gold);
-    font-style: italic;
-}
-
-
-.hero__eyebrow {
-    display: inline-block;
-
-    color: var(--gold);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-
-    opacity: 0;
-    transform: translateY(-10px);
-}
-
-.hero__title-line {
-    display: block;
-
-    opacity: 0;
-    transform: translateY(24px);
-}
-
+/* Apenas a frase de boas-vindas */
 .hero__welcome {
     position: absolute;
     left: 50%;
-    bottom: 156px;
-    transform: translateX(-50%);
+    bottom: 126px;
+    z-index: 4;
 
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 14px;
 
-    width: min(620px, 86vw);
+    width: min(620px, 88vw);
+    transform: translateX(-50%);
 
-    color: rgba(255, 255, 255, 0.88);
+    color: #ffffff;
     font-size: 15px;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.3px;
     text-align: center;
 
-    opacity: 0;
-    z-index: 4;
+    opacity: 1 !important;
 }
 
 .hero__welcome p {
@@ -396,190 +302,90 @@ rgba(0, 0, 0, 0.48) 100%
 }
 
 .hero__welcome-line {
-    width: 42px;
+    display: block;
+    width: 34px;
     height: 1px;
-    background: var(--gold);
-    opacity: 0.62;
+    background: #d5ad55;
+    opacity: 0.82;
 }
 
-
-
-
-
-
-
-
-       .hero__sub {
-    max-width: 620px;
-    margin: 0 auto;
-    color: rgba(255,255,255,.90);
-    font-size: clamp(15px, 2vw, 20px);
-    line-height: 1.6;
-    text-shadow: 0 4px 20px rgba(0,0,0,.8);
-}
-
-        /* Sociais — lateral esquerda */
-        .hero__socials {
+/* Ícones sociais */
+.hero__socials {
     position: absolute;
     left: 50%;
-    bottom: 80px;
-    transform: translateX(-50%);
+    bottom: 52px;
+    z-index: 5;
 
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 16px;
+    justify-content: center;
+    gap: 14px;
 
-    z-index: 10;
-}.hero__socials::before {
-    display: none;
+    transform: translateX(-50%);
 }
-       
-        
-        .hero__socials a {
-    width: 52px;
-    height: 52px;
 
+.hero__socials::before {
+    display: none !important;
+}
+
+.hero__socials a {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    width: 50px;
+    height: 50px;
+
+    border: 1px solid rgba(255, 255, 255, 0.48);
     border-radius: 50%;
 
-    color: #ffffff;
-    font-size: 21px;
-    text-decoration: none;
-
-    background: rgba(0, 0, 0, 0.45);
+    background: rgba(0, 0, 0, 0.38);
     backdrop-filter: blur(8px);
 
-    transition:
-        transform 0.25s ease,
-        color 0.25s ease,
-        background 0.25s ease,
-        border-color 0.25s ease,
-        box-shadow 0.25s ease;
+    color: #ffffff;
+    font-size: 19px;
+    text-decoration: none;
 }
-        
-        
-        .hero__socials a:hover {
-    color: #111111;
+
+.hero__socials a:hover {
     background: #d5ad55;
-    border-color: #d5ad55;
-
-    transform: translateY(-5px) scale(1.08);
-
-    box-shadow:
-        0 0 0 6px rgba(213, 173, 85, 0.18),
-        0 12px 28px rgba(0, 0, 0, 0.45);
+    color: #111111;
 }
 
-       /* ========================================
-   HERO MOBILE — ORGANIZAÇÃO CORRETA
-======================================== */
+/* =========================================================
+   MOBILE
+========================================================= */
 @media (max-width: 768px) {
 
     .hero {
-        min-height: 1120px;
-        height: 1120px;
-        padding: 0;
-    }
+        min-height: 100svh;
+        height: 100svh;
 
-    /* Fundo da Hero: mesma imagem, porém suave */
-    .hero::before {
-        inset: -20px;
-        filter: blur(18px) brightness(0.26);
-        transform: scale(1.06);
-        opacity: 0.88;
-    }
-
-    /* Foto limpa: somente abaixo do título */
-    .hero::after {
-        top: 500px;
-        left: 50%;
-        transform: translateX(-50%);
-
-        width: calc(100% - 40px);
-        height: 330px;
-
-        background-size: contain;
+        background-size: cover;
         background-position: center center;
-        background-repeat: no-repeat;
     }
 
-    /* Título fica totalmente fora da foto */
-    .hero__content {
-        top: 95px;
-        left: 50%;
-        transform: translateX(-50%);
-
-        width: 90vw;
-        padding: 0;
-
-        text-align: center;
-    }
-
-    .hero__title {
-        margin: 0;
-        font-size: clamp(38px, 10vw, 50px);
-        line-height: 1.04;
-        letter-spacing: -0.5px;
-    }
-
-    .hero__title em {
-        display: block;
-        margin-top: 12px;
-        font-size: 0.82em;
-        line-height: 1.08;
-    }
-
-    /* Remove animação antiga que pode estar atrapalhando */
-    .hero__title-line {
-        opacity: 1;
-        transform: none;
-    }
-
-    .hero__eyebrow {
-        display: none;
-    }
-
-    /* Boas-vindas fica abaixo da foto */
     .hero__welcome {
-        bottom: 142px;
-        width: 88vw;
+        bottom: 118px;
+        width: 90vw;
         gap: 10px;
-
-        font-size: 13px;
-        letter-spacing: 0.3px;
-
-        opacity: 1;
+        font-size: 14px;
     }
 
     .hero__welcome-line {
-        width: 24px;
+        width: 26px;
     }
 
-    /* Ícones ficam abaixo da mensagem */
     .hero__socials {
-        bottom: 70px;
-        gap: 12px;
+        bottom: 44px;
+        gap: 13px;
     }
 
     .hero__socials a {
-        width: 42px;
-        height: 42px;
-        font-size: 16px;
-    }
-
-    .hero__overlay {
-        background: linear-gradient(
-            to bottom,
-            rgba(0, 0, 0, 0.22) 0%,
-            rgba(0, 0, 0, 0.04) 38%,
-            rgba(0, 0, 0, 0.08) 68%,
-            rgba(0, 0, 0, 0.45) 100%
-        );
+        width: 46px;
+        height: 46px;
+        font-size: 18px;
     }
 }
 
@@ -587,168 +393,6 @@ rgba(0, 0, 0, 0.48) 100%
 
 
 
-/* =========================================================
-   HERO — NOVA CAPA RESPONSIVA
-   Usa hero-capa.png sem cortar a arte principal.
-========================================================= */
-
-.hero {
-    min-height: 100svh;
-    height: 100svh;
-    background: #050505;
-}
-
-/* Fundo ocupa toda a tela com a mesma imagem suavizada */
-.hero::before {
-    content: "";
-    position: absolute;
-    inset: -30px;
-
-    background-image: url("../images/hero-capa.png");
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-
-    filter: blur(28px) brightness(0.22);
-    transform: scale(1.08);
-
-    opacity: 1;
-    z-index: 0;
-}
-
-/* Arte principal: aparece inteira, sem corte */
-.hero::after {
-    content: "";
-    position: absolute;
-
-    top: 50%;
-    left: 50%;
-
-    width: min(760px, 92vw);
-    height: min(82svh, 900px);
-
-    transform: translate(-50%, -50%);
-
-    background-image: url("../images/hero-capa.png");
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
-
-    z-index: 1;
-    pointer-events: none;
-}
-
-/* Camada escura leve para manter legibilidade */
-.hero__overlay {
-    z-index: 2;
-
-    background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.52) 0%,
-        rgba(0, 0, 0, 0.16) 28%,
-        rgba(0, 0, 0, 0.12) 66%,
-        rgba(0, 0, 0, 0.72) 100%
-    );
-}
-
-/* Título fica acima, sem tapar a imagem */
-.hero__content {
-    top: 82px;
-    z-index: 3;
-}
-
-/* Mensagem e ícones ficam acima da capa */
-.hero__welcome {
-    z-index: 4;
-}
-
-.hero__socials {
-    z-index: 5;
-}
-
-/* =========================================================
-   HERO MOBILE — CAPA COMO FUNDO REAL DA SESSÃO
-   Deve ficar no ÚLTIMO FINAL do hero.css
-========================================================= */
-@media (max-width: 768px) {
-
-    .hero {
-        position: relative !important;
-        width: 100% !important;
-        min-height: calc(100svh - 96px) !important;
-        height: calc(100svh - 96px) !important;
-
-        background-image: url("../images/hero-capa.png") !important;
-        background-size: cover !important;
-        background-position: center center !important;
-        background-repeat: no-repeat !important;
-        background-color: #050505 !important;
-
-        overflow: hidden !important;
-    }
-
-    /* Remove todas as camadas antigas de imagem */
-    .hero::before,
-    .hero::after {
-        content: none !important;
-        display: none !important;
-    }
-
-    /* Esconde a imagem antiga que pode existir no HTML */
-    .hero__bg {
-        display: none !important;
-    }
-
-    /* Escurecimento leve para leitura */
-    .hero__overlay {
-        position: absolute !important;
-        inset: 0 !important;
-        z-index: 1 !important;
-
-        background: linear-gradient(
-            to bottom,
-            rgba(0, 0, 0, 0.06) 0%,
-            rgba(0, 0, 0, 0.04) 52%,
-            rgba(0, 0, 0, 0.20) 72%,
-            rgba(0, 0, 0, 0.70) 100%
-        ) !important;
-    }
-
-    /* Não mostra título nem texto grande na capa */
-    .hero__content {
-        display: none !important;
-    }
-
-    /* Mantém somente a frase de boas-vindas */
-    .hero__welcome {
-        position: absolute !important;
-        left: 50% !important;
-        bottom: 112px !important;
-
-        width: 88vw !important;
-        transform: translateX(-50%) !important;
-
-        justify-content: center !important;
-        color: #ffffff !important;
-
-        z-index: 4 !important;
-    }
-
-    .hero__welcome-line {
-        width: 28px !important;
-        background: #d5ad55 !important;
-    }
-
-    /* Ícones sociais sobre a imagem, na parte inferior */
-    .hero__socials {
-        position: absolute !important;
-        left: 50% !important;
-        bottom: 40px !important;
-
-        transform: translateX(-50%) !important;
-        z-index: 5 !important;
-    }
-}
 
         /* ========================================
            PORTFÓLIO — CARROSSEL DUPLO
@@ -1362,133 +1006,3 @@ rgba(0, 0, 0, 0.48) 100%
     }
 }
 
-/* =========================================================
-   HERO FINAL — CAPA COMO FUNDO REAL
-   Aplicação limpa para desktop e celular
-========================================================= */
-
-/* Hero ocupa toda a tela e usa a nova arte como fundo */
-.hero {
-    position: relative !important;
-    width: 100% !important;
-    min-height: 100svh !important;
-    height: 100svh !important;
-    overflow: hidden !important;
-
-    background-color: #050505 !important;
-    background-image: url("../images/nova-capa.png") !important;
-    background-repeat: no-repeat !important;
-    background-size: cover !important;
-    background-position: center center !important;
-}
-
-/* Desliga imagens antigas colocadas por cima */
-.hero::before,
-.hero::after,
-.hero__bg {
-    content: none !important;
-    display: none !important;
-}
-
-/* Mantém uma camada leve para contraste */
-.hero__overlay {
-    position: absolute !important;
-    inset: 0 !important;
-    z-index: 1 !important;
-
-    background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.08) 0%,
-        rgba(0, 0, 0, 0.03) 45%,
-        rgba(0, 0, 0, 0.22) 72%,
-        rgba(0, 0, 0, 0.74) 100%
-    ) !important;
-}
-
-/* Remove título grande: mantém somente a mensagem de boas-vindas */
-.hero__content {
-    display: none !important;
-}
-
-/* Frase de boas-vindas */
-.hero__welcome {
-    position: absolute !important;
-    left: 50% !important;
-    bottom: 126px !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 12px !important;
-
-    width: min(620px, 88vw) !important;
-    transform: translateX(-50%) !important;
-
-    color: #ffffff !important;
-    font-size: 15px !important;
-    text-align: center !important;
-
-    opacity: 1 !important;
-    z-index: 4 !important;
-}
-
-.hero__welcome-line {
-    display: block !important;
-    width: 30px !important;
-    height: 1px !important;
-    background: #d5ad55 !important;
-}
-
-/* Ícones sociais abaixo da mensagem */
-.hero__socials {
-    position: absolute !important;
-    left: 50% !important;
-    bottom: 48px !important;
-
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 14px !important;
-
-    transform: translateX(-50%) !important;
-    z-index: 5 !important;
-}
-
-.hero__socials::before {
-    display: none !important;
-}
-
-/* =========================================================
-   CELULAR
-========================================================= */
-@media (max-width: 768px) {
-
-    .hero {
-        min-height: calc(100svh - 88px) !important;
-        height: calc(100svh - 88px) !important;
-
-        /*
-           cover faz a imagem ocupar toda a área.
-           Não será mais um retrato pequeno no meio.
-        */
-        background-size: cover !important;
-        background-position: center center !important;
-    }
-
-    .hero__welcome {
-        bottom: 116px !important;
-        width: 90vw !important;
-        font-size: 14px !important;
-    }
-
-    .hero__socials {
-        bottom: 40px !important;
-    }
-
-    .hero__socials a {
-        width: 46px !important;
-        height: 46px !important;
-        font-size: 18px !important;
-    }
-}
