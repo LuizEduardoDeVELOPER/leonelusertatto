@@ -582,6 +582,175 @@ rgba(0, 0, 0, 0.48) 100%
         );
     }
 }
+
+
+
+
+
+/* =========================================================
+   HERO — NOVA CAPA RESPONSIVA
+   Usa hero-capa.png sem cortar a arte principal.
+========================================================= */
+
+.hero {
+    min-height: 100svh;
+    height: 100svh;
+    background: #050505;
+}
+
+/* Fundo ocupa toda a tela com a mesma imagem suavizada */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: -30px;
+
+    background-image: url("../images/hero-capa.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    filter: blur(28px) brightness(0.22);
+    transform: scale(1.08);
+
+    opacity: 1;
+    z-index: 0;
+}
+
+/* Arte principal: aparece inteira, sem corte */
+.hero::after {
+    content: "";
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: min(760px, 92vw);
+    height: min(82svh, 900px);
+
+    transform: translate(-50%, -50%);
+
+    background-image: url("../images/hero-capa.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Camada escura leve para manter legibilidade */
+.hero__overlay {
+    z-index: 2;
+
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.52) 0%,
+        rgba(0, 0, 0, 0.16) 28%,
+        rgba(0, 0, 0, 0.12) 66%,
+        rgba(0, 0, 0, 0.72) 100%
+    );
+}
+
+/* Título fica acima, sem tapar a imagem */
+.hero__content {
+    top: 82px;
+    z-index: 3;
+}
+
+/* Mensagem e ícones ficam acima da capa */
+.hero__welcome {
+    z-index: 4;
+}
+
+.hero__socials {
+    z-index: 5;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+@media (max-width: 768px) {
+
+    .hero {
+        min-height: 1080px;
+        height: 1080px;
+    }
+
+    .hero::before {
+        inset: -18px;
+        filter: blur(20px) brightness(0.24);
+        transform: scale(1.06);
+    }
+
+    /* Capa inteira com proporção preservada */
+    .hero::after {
+        top: 585px;
+
+        width: calc(100% - 32px);
+        height: 500px;
+
+        transform: translate(-50%, -50%);
+        background-size: contain;
+    }
+
+    /* Área do título separada da imagem */
+    .hero__content {
+        top: 102px;
+        width: 90vw;
+        padding: 0;
+    }
+
+    .hero__title {
+        font-size: clamp(37px, 10vw, 50px);
+        line-height: 1.02;
+        letter-spacing: -0.4px;
+    }
+
+    .hero__title em {
+        display: block;
+        margin-top: 10px;
+        font-size: 0.82em;
+        line-height: 1.08;
+    }
+
+    .hero__eyebrow {
+        display: none;
+    }
+
+    .hero__title-line {
+        opacity: 1;
+        transform: none;
+    }
+
+    /* Boas-vindas depois da imagem */
+    .hero__welcome {
+        bottom: 122px;
+        width: 88vw;
+
+        font-size: 13px;
+        letter-spacing: 0.2px;
+        opacity: 1;
+    }
+
+    .hero__welcome-line {
+        width: 24px;
+    }
+
+    .hero__socials {
+        bottom: 50px;
+        gap: 12px;
+    }
+
+    .hero__socials a {
+        width: 42px;
+        height: 42px;
+        font-size: 16px;
+    }
+}
+
+
+
+
         /* ========================================
            PORTFÓLIO — CARROSSEL DUPLO
         ======================================== */
