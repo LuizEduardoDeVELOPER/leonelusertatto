@@ -231,43 +231,78 @@ opacity: 0.32;
    Arquivo único responsável pela primeira sessão.
 ========================================================= */
 
+/* =========================================================
+   HERO DESKTOP — IMAGEM INTEIRA COM FUNDO CINEMATOGRÁFICO
+========================================================= */
+
 .hero {
     position: relative;
     width: 100%;
     min-height: 100svh;
     height: 100svh;
     overflow: hidden;
+    background: #050505;
+}
 
-    background-color: #050505;
+
+/* Fundo ampliado para preencher a tela desktop */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: -35px;
+
     background-image: url("../images/nova-capa.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
+
+    filter: blur(26px) brightness(0.24);
+    transform: scale(1.08);
+
+    z-index: 0;
 }
 
-/* Desativa imagens antigas e pseudo-elementos da Hero */
-.hero::before,
-.hero::after,
+/* Arte principal inteira, sem corte */
+.hero::after {
+    content: "";
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: min(620px, 42vw);
+    height: min(90vh, 920px);
+
+    transform: translate(-50%, -50%);
+
+    background-image: url("../images/nova-capa.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Esconde uma imagem antiga caso exista no HTML */
 .hero__bg {
-    content: none !important;
     display: none !important;
 }
 
-/* Camada discreta apenas para leitura dos elementos inferiores */
+
+
 .hero__overlay {
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: 2;
 
     background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.02) 0%,
-        rgba(0, 0, 0, 0.02) 55%,
-        rgba(0, 0, 0, 0.20) 75%,
-        rgba(0, 0, 0, 0.76) 100%
+        90deg,
+        rgba(0, 0, 0, 0.30) 0%,
+        rgba(0, 0, 0, 0.08) 45%,
+        rgba(0, 0, 0, 0.26) 100%
     );
 }
-
 /* Não exibe mais título na capa */
 .hero__content {
     display: none !important;
@@ -358,12 +393,17 @@ opacity: 0.32;
 ========================================================= */
 @media (max-width: 768px) {
 
+        /* Mobile mantém imagem como fundo completo */
     .hero {
-        min-height: 100svh;
-        height: 100svh;
-
+        background-image: url("../images/nova-capa.png");
+        background-repeat: no-repeat;
         background-size: cover;
-        background-position: center center;
+        background-position: 46% center;
+    }
+
+    .hero::before,
+    .hero::after {
+        display: none !important;
     }
 
     .hero__welcome {
