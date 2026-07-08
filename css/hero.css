@@ -394,41 +394,71 @@ opacity: 0.32;
 /* =========================================================
    MOBILE
 ========================================================= */
+/* =========================
+   MOBILE
+========================= */
 @media (max-width: 768px) {
-
-        /* Mobile mantém imagem como fundo completo */
     .hero {
+        position: relative;
+        width: 100%;
+        min-height: max(100svh, calc(100vw * 1.78));
+        height: auto;
+        overflow: hidden;
+
+        background-color: #050505;
         background-image: url("../images/mobile.jpg");
         background-repeat: no-repeat;
-        background-size: cover;
-        background-position: 46% center;
+
+        /* mostra a arte inteira */
+        background-size: 100% auto;
+        background-position: center top;
     }
 
+    /* remove camadas antigas */
     .hero::before,
-    .hero::after {
+    .hero::after,
+    .hero__bg {
         display: none !important;
+        content: none !important;
+    }
+
+    .hero__overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.08) 0%,
+            rgba(0, 0, 0, 0.10) 55%,
+            rgba(0, 0, 0, 0.42) 82%,
+            rgba(0, 0, 0, 0.72) 100%
+        );
     }
 
     .hero__welcome {
-        bottom: 118px;
-        width: 90vw;
+        bottom: 170px;
+        width: 90%;
         gap: 10px;
         font-size: 14px;
     }
 
+    .hero__welcome p {
+        white-space: nowrap;
+    }
+
     .hero__welcome-line {
-        width: 26px;
+        width: 24px;
     }
 
     .hero__socials {
-        bottom: 44px;
-        gap: 13px;
+        bottom: 92px;
+        gap: 14px;
     }
 
     .hero__socials a {
-        width: 46px;
-        height: 46px;
-        font-size: 18px;
+        width: 54px;
+        height: 54px;
+        font-size: 22px;
     }
 }
 
