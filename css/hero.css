@@ -390,31 +390,31 @@ opacity: 0.32;
     color: #111111;
     transform: translateY(-4px);
 }
-
 /* =========================================================
-   MOBILE
+   MOBILE — MOSTRAR A CAPA INTEIRA SEM CORTAR
 ========================================================= */
-/* =========================
-   MOBILE
-========================= */
 @media (max-width: 768px) {
+
     .hero {
         position: relative;
         width: 100%;
-        min-height: max(100svh, calc(100vw * 1.78));
-        height: auto;
+
+        /*
+          A imagem mobile é vertical 9:16.
+          Essa altura permite a imagem aparecer inteira.
+        */
+        min-height: calc(100vw * 1.7778);
+        height: calc(100vw * 1.7778);
+
         overflow: hidden;
-
         background-color: #050505;
-        background-image: url("../images/mobile.jpg");
-        background-repeat: no-repeat;
 
-        /* mostra a arte inteira */
+        background-image: url("../images/mobile.png");
+        background-repeat: no-repeat;
         background-size: 100% auto;
         background-position: center top;
     }
 
-    /* remove camadas antigas */
     .hero::before,
     .hero::after,
     .hero__bg {
@@ -426,24 +426,21 @@ opacity: 0.32;
         position: absolute;
         inset: 0;
         z-index: 2;
+
         background: linear-gradient(
             to bottom,
-            rgba(0, 0, 0, 0.08) 0%,
-            rgba(0, 0, 0, 0.10) 55%,
-            rgba(0, 0, 0, 0.42) 82%,
+            rgba(0, 0, 0, 0.04) 0%,
+            rgba(0, 0, 0, 0.06) 58%,
+            rgba(0, 0, 0, 0.32) 80%,
             rgba(0, 0, 0, 0.72) 100%
         );
     }
 
     .hero__welcome {
         bottom: 170px;
-        width: 90%;
+        width: 90vw;
         gap: 10px;
         font-size: 14px;
-    }
-
-    .hero__welcome p {
-        white-space: nowrap;
     }
 
     .hero__welcome-line {
@@ -461,10 +458,6 @@ opacity: 0.32;
         font-size: 22px;
     }
 }
-
-
-
-
 
 
         /* ========================================
