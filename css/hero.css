@@ -246,7 +246,7 @@ opacity: 0.32;
     position: absolute;
     inset: -30px;
 
-    background-image: url("../images/nova-capa.png");
+    background-image: url("../images/mobile.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -270,7 +270,7 @@ opacity: 0.32;
 
     transform: translate(-50%, -50%);
 
-    background-image: url("../images/nova-capa.png");
+    background-image: url("../images/mobile.jpg");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
@@ -409,7 +409,7 @@ opacity: 0.32;
         overflow: hidden;
         background-color: #050505;
 
-        background-image: url("../images/mobile.png");
+        background-image: url("../images/mobile.jpg");
         background-repeat: no-repeat;
         background-size: 100% auto;
         background-position: center top;
