@@ -390,30 +390,20 @@ opacity: 0.32;
     color: #111111;
     transform: translateY(-4px);
 }
+
 /* =========================================================
-   MOBILE — MOSTRAR A CAPA INTEIRA SEM CORTAR
+   MOBILE
 ========================================================= */
+
 @media (max-width: 768px) {
 
-    .hero {
-        position: relative;
-        width: 100%;
-
-        /*
-          A imagem mobile é vertical 9:16.
-          Essa altura permite a imagem aparecer inteira.
-        */
-        min-height: calc(100vw * 1.7778);
-        height: calc(100vw * 1.7778);
-
-        overflow: hidden;
-        background-color: #050505;
-
-        background-image: url("../images/mobile.jpg");
-        background-repeat: no-repeat;
-        background-size: 100% auto;
-        background-position: center top;
-    }
+    .hero__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    position: relative;
+    z-index: 1;
+}
 
     .hero::before,
     .hero::after,
@@ -423,21 +413,17 @@ opacity: 0.32;
     }
 
     .hero__overlay {
-        position: absolute;
-        inset: 0;
-        z-index: 2;
-
         background: linear-gradient(
             to bottom,
             rgba(0, 0, 0, 0.04) 0%,
-            rgba(0, 0, 0, 0.06) 58%,
-            rgba(0, 0, 0, 0.32) 80%,
-            rgba(0, 0, 0, 0.72) 100%
+            rgba(0, 0, 0, 0.08) 55%,
+            rgba(0, 0, 0, 0.34) 78%,
+            rgba(0, 0, 0, 0.76) 100%
         );
     }
 
     .hero__welcome {
-        bottom: 170px;
+        bottom: 154px;
         width: 90vw;
         gap: 10px;
         font-size: 14px;
@@ -448,7 +434,7 @@ opacity: 0.32;
     }
 
     .hero__socials {
-        bottom: 92px;
+        bottom: 78px;
         gap: 14px;
     }
 
@@ -459,7 +445,27 @@ opacity: 0.32;
     }
 }
 
+/* =========================================================
+   MOBILE PEQUENO
+========================================================= */
 
+@media (max-width: 420px) {
+
+    .hero__welcome {
+        bottom: 148px;
+        font-size: 13px;
+    }
+
+    .hero__socials {
+        bottom: 74px;
+    }
+
+    .hero__socials a {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+}
         /* ========================================
            PORTFÓLIO — CARROSSEL DUPLO
         ======================================== */
