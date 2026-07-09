@@ -390,20 +390,21 @@ opacity: 0.32;
     color: #111111;
     transform: translateY(-4px);
 }
-
 /* =========================================================
-   MOBILE — HERO COM IMAGEM INTEIRA E BOTÕES ABAIXO
+   MOBILE — HERO COM IMAGEM INTEIRA E ELEMENTOS SOBRE A BASE
 ========================================================= */
 @media (max-width: 768px) {
 
     .hero {
         position: relative;
         width: 100%;
-        min-height: auto;
         height: auto;
-        overflow: visible;
+        min-height: auto;
+        overflow: hidden;
         background: #050505;
-        padding-bottom: 150px;
+
+        /* remove o espaço preto grande embaixo */
+        padding-bottom: 0;
     }
 
     .hero::before,
@@ -422,7 +423,19 @@ opacity: 0.32;
     }
 
     .hero__overlay {
-        display: none !important;
+        display: block !important;
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+
+        background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.02) 0%,
+            rgba(0, 0, 0, 0.04) 55%,
+            rgba(0, 0, 0, 0.38) 82%,
+            rgba(0, 0, 0, 0.78) 100%
+        );
     }
 
     .hero__content {
@@ -430,24 +443,26 @@ opacity: 0.32;
     }
 
     .hero__welcome {
-        position: relative;
-        left: auto;
-        bottom: auto;
-        transform: none;
+        position: absolute;
+        left: 50%;
+        bottom: 118px;
+        transform: translateX(-50%);
 
         z-index: 4;
-        width: 100%;
-        max-width: 100%;
-        margin: 22px auto 18px;
-        padding: 0 22px;
+        width: 94%;
+        max-width: 94%;
 
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
+        gap: 8px;
+
+        margin: 0;
+        padding: 0 12px;
 
         color: #ffffff;
         font-size: 14px;
+        line-height: 1.2;
         text-align: center;
     }
 
@@ -457,7 +472,7 @@ opacity: 0.32;
     }
 
     .hero__welcome-line {
-        width: 26px;
+        width: 24px;
         height: 1px;
         background: #d5ad55;
         opacity: 0.82;
@@ -465,26 +480,34 @@ opacity: 0.32;
     }
 
     .hero__socials {
-        position: relative;
-        left: auto;
-        bottom: auto;
-        transform: none;
+        position: absolute;
+        left: 50%;
+        bottom: 42px;
+        transform: translateX(-50%);
 
         z-index: 5;
+
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 14px;
 
-        margin: 0 auto;
+        margin: 0;
     }
 
     .hero__socials a {
-        width: 56px;
-        height: 56px;
+        width: 54px;
+        height: 54px;
         font-size: 22px;
 
-        background: rgba(0, 0, 0, 0.48);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: #ffffff;
+        text-decoration: none;
+
+        background: rgba(0, 0, 0, 0.52);
         border: 1px solid rgba(255, 255, 255, 0.42);
         border-radius: 50%;
         backdrop-filter: blur(8px);
